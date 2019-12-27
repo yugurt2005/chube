@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+// NOTE: Before building the game (when we're finished), change the 'individual' rendering mode to 'chunk' and make a sprite atlas instead.
+// This will fix/make more efficient isometric rendering in the final build; this 'individual' rendering mode is just a temporary way to 
+// get the tilemap to sort correctly while still being able to make/edit/add new tiles into the tile palette.
+
 public class BuildMode : MonoBehaviour
 {
     public Tile tile;
+    public Tile chube;
     public Tilemap tilemap;
     public BuildCursor cursor;
-    
-    // Sets chube as a tile
-    void Start()
-    {
-        tilemap.SetTile(new Vector3Int(0, -1, -4), tile);
-    }
 
     void Update()
     {
@@ -27,7 +26,7 @@ public class BuildMode : MonoBehaviour
             cursor.render.color = Color.green;
 
             // If it's available and the player clicks the mouse, build a floor tile there
-            if (Input.GetButtonDown("Fire1") && !tilemap.HasTile(cellPosition))
+            if (Input.GetButtonDown("Fire1"))
             {
                 tilemap.SetTile(cellPosition, tile);
             }
@@ -35,13 +34,15 @@ public class BuildMode : MonoBehaviour
     }
 
     // Checks if any of the surrounding 4 tiles contains a floor
-    private bool checkAvailability(Vector3Int tile)
+    private bool checkAvailability(Vector3Int pos)
     {
+        if (tilemap.HasTile(pos)) return false;
+
         ArrayList borderTiles = new ArrayList();
-        borderTiles.Add(new Vector3Int(tile.x, tile.y + 1, tile.z));
-        borderTiles.Add(new Vector3Int(tile.x, tile.y - 1, tile.z));
-        borderTiles.Add(new Vector3Int(tile.x + 1, tile.y, tile.z));
-        borderTiles.Add(new Vector3Int(tile.x - 1, tile.y, tile.z));
+        borderTiles.Add(new Vector3Int(pos.x, pos.y + 1, pos.z));
+        borderTiles.Add(new Vector3Int(pos.x, pos.y - 1, pos.z));
+        borderTiles.Add(new Vector3Int(pos.x + 1, pos.y, pos.z));
+        borderTiles.Add(new Vector3Int(pos.x - 1, pos.y, pos.z));
 
         foreach (Vector3Int borderTile in borderTiles)
         {

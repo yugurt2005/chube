@@ -23,7 +23,10 @@ public class TroopMovementController : MonoBehaviour
             Vector3Int origin = tilemap.WorldToCell(transform.position);
 
             Pathfinder pathfinder = new Pathfinder(null, destination, origin);
+<<<<<<< HEAD
             
+=======
+>>>>>>> troops
         }
     }
 }

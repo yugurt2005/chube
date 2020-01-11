@@ -87,7 +87,8 @@ public class Pathfinder
 
             foreach (Node child in children)
             {
-                if (tilemap.GetTile(child.position) == null)
+                TileBase tile = tilemap.GetTile(child.position);
+                if (tile == null || tile.name != "ground")
                 {
                     children.Remove(child);
                     continue;

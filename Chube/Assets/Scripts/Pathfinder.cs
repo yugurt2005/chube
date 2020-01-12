@@ -4,30 +4,30 @@ using UnityEngine.Tilemaps;
 
 public class Node
 {
-	public Vector3Int position;
+    public Vector3Int position;
 
     public Node parent;
     public List<Node> children;
 
     public double gCost;
-	public double hCost;
-	public double fCost
-	{
-		get => gCost+hCost;
-	}
-		
-	public Node(Vector3Int _position)
-	{
-		position = _position;
-	}
+    public double hCost;
+    public double fCost
+    {
+        get => gCost + hCost;
+    }
+
+    public Node(Vector3Int _position)
+    {
+        position = _position;
+    }
 }
 
 public class Pathfinder
 {
     Tilemap tilemap;
 
-	Vector3Int origin;
-	Vector3Int destination;
+    Vector3Int origin;
+    Vector3Int destination;
 
     List<Node> open;
     List<Node> closed;
@@ -35,17 +35,18 @@ public class Pathfinder
     public List<Vector3Int> path;
 
     public Pathfinder(Tilemap _tilemap, Vector3Int _origin, Vector3Int _destination)
-	{
+    {
         tilemap = _tilemap;
 
-		origin = _origin;
-		destination = _destination;
-		
-		open = new List<Node>() { new Node(origin) };
-		closed = new List<Node>() {};
+        origin = _origin;
+        destination = _destination;
+        Debug.Log(origin + " : " + destination);
+
+        open = new List<Node>() { new Node(origin) };
+        closed = new List<Node>() { };
 
         path = CalculatePath(Pathfind());
-	}
+    }
 
     private List<Vector3Int> CalculatePath(Node node)
     {
@@ -64,16 +65,17 @@ public class Pathfinder
 
         return path;
     }
-	
-	private Node Pathfind()
-	{
-		while (open.Count > 0)
-		{
+
+    private Node Pathfind()
+    {
+        int turnCount = 0;
+        while (open.Count > 0 && turnCount < 100)
+        {
             Node current = open[0];
             foreach (Node node in open)
                 if (node.fCost < current.fCost)
                     current = node;
-            closed.Add(current);
+            open.Remove(current);
 
             List<Node> children = new List<Node>()
             {
@@ -85,25 +87,21 @@ public class Pathfinder
                 new Node(current.position + new Vector3Int(0, 0, -1)),
             };
 
+            List<Node> remove = new List<Node>();
             foreach (Node child in children)
             {
-<<<<<<< HEAD
                 TileBase tile = tilemap.GetTile(child.position);
-                if (tile == null || tile.name != "ground")
-=======
-                if (tilemap.GetTile(child.position) == null)
->>>>>>> troops
+                if (tile == null || tile.name != "BuildingTile")
                 {
-                    children.Remove(child);
+                    remove.Add(child);
                     continue;
                 }
-
                 child.parent = current;
 
-                child.gCost = current.gCost +
-                    Mathf.Abs(current.position.x - child.position.x) +
-                    Mathf.Abs(current.position.y - child.position.y) +
-                    Mathf.Abs(current.position.z - child.position.z);
+                if (child.position == destination)
+                    return child;
+
+                child.gCost = current.gCost + 1;
                 child.hCost =
                     Mathf.Abs(origin.x - child.position.x) +
                     Mathf.Abs(origin.y - child.position.y) +
@@ -113,21 +111,27 @@ public class Pathfinder
                     if (node.position == child.position)
                         if (node.fCost < child.fCost)
                         {
-                            children.Remove(child);
+                            remove.Add(child);
                             continue;
                         }
                 foreach (Node node in open)
                     if (node.position == child.position)
                         if (node.fCost < child.fCost)
                         {
-                            children.Remove(child);
+                            remove.Add(child);
                             continue;
                         }
 
                 if (child.position == destination)
                     return child;
             }
-		}
+            foreach (Node node in remove)
+                children.Remove(node);
+
+            turnCount++;
+            closed.Add(current);
+            open.AddRange(children);
+        }
         return null;
-	}
+    }
 }

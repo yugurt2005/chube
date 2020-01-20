@@ -26,7 +26,7 @@ public class BuildMode : MonoBehaviour
             cursor.render.color = Color.green;
 
             // If it's available and the player clicks the mouse, build a floor tile there
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButton("Fire1"))
             {
                 tilemap.SetTile(cellPosition, tile);
             }

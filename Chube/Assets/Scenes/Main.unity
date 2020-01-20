@@ -495,7 +495,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1192,7 +1192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3181e33b28dd50a4ca0bcaf53025780d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 2.63
   rb: {fileID: 2075767960}
 --- !u!1001 &3565971338286922769
 PrefabInstance:
@@ -1204,12 +1203,12 @@ PrefabInstance:
     - target: {fileID: 356631547389147512, guid: ed40d954466ec6847b1a6f659dd34095,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.9
+      value: -7.7
       objectReference: {fileID: 0}
     - target: {fileID: 356631547389147512, guid: ed40d954466ec6847b1a6f659dd34095,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.5
+      value: 19.6
       objectReference: {fileID: 0}
     - target: {fileID: 356631547389147512, guid: ed40d954466ec6847b1a6f659dd34095,
         type: 3}
@@ -1260,6 +1259,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Debris
+      objectReference: {fileID: 0}
+    - target: {fileID: 955822134475593914, guid: ed40d954466ec6847b1a6f659dd34095,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed40d954466ec6847b1a6f659dd34095, type: 3}

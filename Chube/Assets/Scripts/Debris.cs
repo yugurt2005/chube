@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Debris : MonoBehaviour
 {
+<<<<<<< HEAD
     public Rigidbody2D rb;
 
     void Start()
@@ -15,3 +16,6 @@ public class Debris : MonoBehaviour
     {
     }
 }
+=======
+}
+>>>>>>> troops

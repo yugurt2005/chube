@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿/* using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class TroopMovementController : MonoBehaviour
 {
     public float movementSpeed = 1f;
 
     public Tilemap tilemap;
+
     Rigidbody2D rbody;
     IsometricCharacterRenderer isoRenderer;
 
@@ -20,19 +22,24 @@ public class TroopMovementController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        Vector3Int target = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+        if (Input.GetButtonDown("Fire1"))
         {
-            Vector3Int destination = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             Vector3Int origin = tilemap.WorldToCell(transform.position);
 
-            Pathfinder pathfinder = new Pathfinder(tilemap, destination, origin);
-            cartesianPath = pathfinder.path;
+            Pathfinder pathfinder = new Pathfinder(tilemap, target, origin);
+            Debug.Log("Origin: " + origin + " Destination: " + target + " Path: " + pathfinder.path);
+
+            cartesianPath = pathfinder.path;                
         }
+        
 
         if (cartesianPath.Count > 0)
         {
-            rbody.position = new Vector2((2 * cartesianPath[0].y + cartesianPath[0].x) / 2, 
+            transform.position = new Vector2((2 * cartesianPath[0].y + cartesianPath[0].x) / 2, 
                 (2 * cartesianPath[0].y - cartesianPath[0].x) / 2);
         }
     }
 }
+*/

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DebrisInteraction : MonoBehaviour
 {
+    // TODO: 
+    // - change appearance when mouse is over
+    // - show damage
+
     public int health = 5;
     public SpriteRenderer self;
     public Collider2D col;

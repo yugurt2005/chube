@@ -13,7 +13,6 @@ public class MaterialCounter : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         text.text = materials.amount.ToString();

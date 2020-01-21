@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Random path is found by generating a random number between 0 and the perimeter of the background rectangle.
+// Then, moving from the bottom left counterclockwise, it turns that number into a position on the perimeter of the rectangle.
+// You get these random spots twice: one for the origin, one for the target.
+// I feel bigbrained lol
+
 public class DebrisMovement : MonoBehaviour
 {
     public RectTransform bgRect;

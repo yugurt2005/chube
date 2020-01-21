@@ -4,8 +4,15 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
+// This is the basic code for movement: go to where it says "IMPLEMENT PATHFINDING HERE" to fill in animation for movement
+// (right now it just teleports there)
+
 public class IsometricMovement : MonoBehaviour
 {
+    // TODO:
+    // - check if spot is available (no obstacle or other troops there)
+    // - change what spots you can move to based on animal (like chess)
+
     public float speed = 0.5f;
 
     public bool troopsOn = false;
@@ -19,14 +26,12 @@ public class IsometricMovement : MonoBehaviour
     public GameObject buildCursor;
     public Chube chube;
 
-    // Start is called before the first frame update
     void Start()
     {
         troopButton.onClick.AddListener(onButtonPress);
         transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3Int target = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
@@ -52,7 +57,7 @@ public class IsometricMovement : MonoBehaviour
         }
     }
 
-    // For future use
+    // For future use (so if you input (0, 1, 0) it'll move right ISOMETRICALLY (aka down-right)
     Vector3 cartesianToIsometric(Vector3 coords)
     {
         Vector3 isometric = new Vector3(0, 0, 0);

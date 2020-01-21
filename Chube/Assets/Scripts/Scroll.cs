@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Scroll : MonoBehaviour
 {
+    // TODO: 
+    // - drag to move camera around
+    // - double click on something to focus on it
+
     Camera cam;
 
     void Start()

@@ -13,6 +13,7 @@ public class BuildMode : MonoBehaviour
     public Tile chube;
     public Tilemap tilemap;
     public BuildCursor cursor;
+    public Materials materials;
 
     void Update()
     {
@@ -28,6 +29,7 @@ public class BuildMode : MonoBehaviour
             // If it's available and the player clicks the mouse, build a floor tile there
             if (Input.GetButton("Fire1"))
             {
+                materials.amount -= 5;
                 tilemap.SetTile(cellPosition, tile);
             }
         }        
@@ -36,7 +38,7 @@ public class BuildMode : MonoBehaviour
     // Checks if any of the surrounding 4 tiles contains a floor
     private bool checkAvailability(Vector3Int pos)
     {
-        if (tilemap.HasTile(pos)) return false;
+        if (tilemap.HasTile(pos) || materials.amount < 5) return false;
 
         ArrayList borderTiles = new ArrayList();
         borderTiles.Add(new Vector3Int(pos.x, pos.y + 1, pos.z));

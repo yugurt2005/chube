@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class State {
 	public Vector3Int position;
@@ -30,7 +31,6 @@ public class IsoPathfinder : MonoBehaviour {
 		State state = ForwardPropagatePath ();
 		while (state != null) {
 			yield return state.position;
-			Debug.Log (state.position);
 			state = state.parent;
 		}
 	}
@@ -62,8 +62,10 @@ public class IsoPathfinder : MonoBehaviour {
 					if (branch.position == destinationLocation)
 						return branch;
 
+                    Debug.Log(tilemap.GetTile(branch.position).name);
+
 					try {
-						if (deltaX == 0 && deltaY == 0)
+						if (Mathf.Abs(deltaX) == Mathf.Abs(deltaY))
 							continue;
 						if (tilemap.GetTile(branch.position).name != "BuildingTile")
 							continue;

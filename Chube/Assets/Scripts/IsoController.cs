@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class IsoController : MonoBehaviour {
 	[SerializeField]
@@ -19,7 +20,7 @@ public class IsoController : MonoBehaviour {
 	}
 
 	IEnumerator Move () {
-		isoPathfinder.originLocation = new Vector3Int(2, 5, 0);
+		isoPathfinder.originLocation = new Vector3Int(2, 5, 0); //SHOULD BE THE DESTINATION FROM MOUSE CLICK :(
 		isoPathfinder.destinationLocation = tilemap.WorldToCell (transform.position);
 		Debug.Log (isoPathfinder.originLocation + " : " + isoPathfinder.destinationLocation);
 		IEnumerable<Vector3Int> path = isoPathfinder.BackPropagatePath ();

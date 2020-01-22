@@ -40,7 +40,6 @@ public class Pathfinder
 
         origin = _origin;
         destination = _destination;
-        Debug.Log(origin + " : " + destination);
 
         open = new List<Node>() { new Node(origin) };
         closed = new List<Node>() { };
@@ -77,14 +76,14 @@ public class Pathfinder
                     current = node;
             open.Remove(current);
 
+            Debug.Log(current.position);
+
             List<Node> children = new List<Node>()
             {
                 new Node(current.position + new Vector3Int(+1, 0, 0)),
                 new Node(current.position + new Vector3Int(-1, 0, 0)),
                 new Node(current.position + new Vector3Int(0, +1, 0)),
                 new Node(current.position + new Vector3Int(0, -1, 0)),
-                new Node(current.position + new Vector3Int(0, 0, +1)),
-                new Node(current.position + new Vector3Int(0, 0, -1)),
             };
 
             List<Node> remove = new List<Node>();

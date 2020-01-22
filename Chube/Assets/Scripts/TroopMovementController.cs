@@ -18,21 +18,21 @@ public class TroopMovementController : MonoBehaviour
         isoRenderer = GetComponentInChildren<IsometricCharacterRenderer>();
     }
 
+    void Start()
+    {
+        transform.position = tilemap.CellToWorld(new Vector3Int(0, -1, 0));
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonUp(0))
         {
-            Vector3Int destination = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            Vector3Int destination = new Vector3Int(0, 1, 1);
             Vector3Int origin = tilemap.WorldToCell(transform.position);
+            Debug.Log(origin + " : " + destination);
 
             Pathfinder pathfinder = new Pathfinder(tilemap, destination, origin);
-            cartesianPath = pathfinder.path;
-        }
-
-        if (cartesianPath.Count > 0)
-        {
-            rbody.position = new Vector2((2 * cartesianPath[0].y + cartesianPath[0].x) / 2, 
-                (2 * cartesianPath[0].y - cartesianPath[0].x) / 2);
+            
         }
     }
 }

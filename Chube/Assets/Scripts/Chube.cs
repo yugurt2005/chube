@@ -5,11 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class Chube : MonoBehaviour
-{    
-    private bool switchedMode = false;
+{
+    public bool switchedMode = false;
 
     public GameObject BuildMode;
     public GameObject BuildCursor;
+    public IsometricMovement troops;
     public Button BuildModeButton;
     public Tilemap tilemap;
     public Tile chubeTile;
@@ -22,17 +23,27 @@ public class Chube : MonoBehaviour
 
     void Update()
     {
-        // If the button was pressed, building mode related things are turned on/off
-        if (switchedMode)
-        {
-            BuildCursor.SetActive(!BuildCursor.activeSelf);
-            BuildMode.SetActive(!BuildMode.activeSelf);
-            switchedMode = false;
-        }
     }    
 
     void onButtonPress()
     {
-        switchedMode = true;
+        switchedMode = !switchedMode;
+        if (switchedMode) turnOn();
+        else turnOff();
+    }
+
+    public void turnOff()
+    {
+        BuildCursor.SetActive(false);
+        BuildMode.SetActive(false);
+    }
+
+    public void turnOn()
+    {
+        BuildCursor.SetActive(true);
+        BuildMode.SetActive(true);
+
+        troops.troopsOn = false;
+        troops.resetTile();
     }
 }

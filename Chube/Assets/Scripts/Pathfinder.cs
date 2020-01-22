@@ -40,6 +40,10 @@ public class Pathfinder
 
         origin = _origin;
         destination = _destination;
+<<<<<<< HEAD
+=======
+        Debug.Log(origin + " : " + destination);
+>>>>>>> troops
 
         open = new List<Node>() { new Node(origin) };
         closed = new List<Node>() { };
@@ -75,8 +79,11 @@ public class Pathfinder
                 if (node.fCost < current.fCost)
                     current = node;
             open.Remove(current);
+<<<<<<< HEAD
 
             Debug.Log(current.position);
+=======
+>>>>>>> troops
 
             List<Node> children = new List<Node>()
             {

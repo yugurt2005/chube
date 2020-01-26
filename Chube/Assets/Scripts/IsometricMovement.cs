@@ -14,8 +14,8 @@ public class IsometricMovement : MonoBehaviour
     // - change what spots you can move to based on animal (like chess)
 
     public float speed = 0.5f;
-
     public bool troopsOn = false;
+
     private Vector3Int previousTile;
 
     public Button troopButton;
@@ -25,6 +25,8 @@ public class IsometricMovement : MonoBehaviour
     public GameObject buildMode;
     public GameObject buildCursor;
     public Chube chube;
+
+    public IsoPathfinder pathfinder;
 
     void Start()
     {
@@ -36,12 +38,12 @@ public class IsometricMovement : MonoBehaviour
     {
         Vector3Int target = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
-        if (troopsOn && tilemap.HasTile(target))
+        if (troopsOn && tilemap.HasTile(target) && transform.position != tilemap.GetCellCenterWorld(target))
         {    
             if (Input.GetButtonDown("Fire1"))
             {
                 // IMPLEMENT PATHFINDING HERE
-                transform.position = tilemap.GetCellCenterWorld(target);
+
             }
 
             if (tilemap.GetTile(target) == neutralTile)
@@ -83,4 +85,5 @@ public class IsometricMovement : MonoBehaviour
     {
         tilemap.SetTile(previousTile, neutralTile);
     }
+
 }

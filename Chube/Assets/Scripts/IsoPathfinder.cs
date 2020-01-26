@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
+// SEE THE BOTTOM OF THE SCRIPT
+
 public class State {
 	public Vector3Int position;
 
@@ -83,4 +86,13 @@ public class IsoPathfinder : MonoBehaviour {
 
 		return null;
 	}
+
+    /*
+    public Vector3Int[] getPath() {
+        if it's possible,
+        returns a Vector3Int[] containing all the positions in the path
+        so then it'd be really nice to implement into scripts like IsometricMovement
+        and we won't need a buncha extra stuff
+    }
+    */
 }

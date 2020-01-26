@@ -4,30 +4,28 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class IsoController : MonoBehaviour {
-	[SerializeField]
 	public Tilemap tilemap;
-	IsoPathfinder isoPathfinder;
+	public IsoPathfinder isoPathfinder;
 
 	void Start () {
-		isoPathfinder = new IsoPathfinder(tilemap);
 	}
 
 	void FixedUpdate () {
-		if (Input.GetMouseButtonUp(0))
-			StartCoroutine (Move());
-		if (Input.GetMouseButtonUp (1))
-			StopCoroutine (Move ());
+        if (Input.GetButtonDown("Fire1"))
+            StartCoroutine(Move(tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition))));
 	}
 
-	IEnumerator Move () {
-		isoPathfinder.originLocation = new Vector3Int(2, 5, 0);
-		isoPathfinder.destinationLocation = tilemap.WorldToCell (transform.position);
+	IEnumerator Move(Vector3Int target) {
+		isoPathfinder.originLocation = tilemap.WorldToCell(transform.position);
+		isoPathfinder.destinationLocation = tilemap.WorldToCell(target);
 		Debug.Log (isoPathfinder.originLocation + " : " + isoPathfinder.destinationLocation);
 		IEnumerable<Vector3Int> path = isoPathfinder.BackPropagatePath ();
+        
+
 		foreach (Vector3Int location in path) {
-			Vector3 target = tilemap.CellToWorld (location);
-			while (Vector3.Distance(transform.position, target) > 0.075f) {
-				transform.position = Vector3.MoveTowards (transform.position, target, Time.deltaTime);
+			Vector3 miniTarget = tilemap.GetCellCenterWorld(location);
+			while (transform.position != miniTarget) {
+				transform.position = Vector3.MoveTowards (transform.position, miniTarget, Time.deltaTime);
 				yield return new WaitForFixedUpdate();
 			}
 		}

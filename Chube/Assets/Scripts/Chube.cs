@@ -14,11 +14,12 @@ public class Chube : MonoBehaviour
     public Button BuildModeButton;
     public Tilemap tilemap;
     public Tile chubeTile;
+    public TilemapRenderer tilemapRenderer;
 
     void Start()
     {
         BuildModeButton.onClick.AddListener(onButtonPress);
-        tilemap.SetTile(new Vector3Int(0, -1, -4), chubeTile);
+        tilemap.SetTile(new Vector3Int(0, -1, tilemapRenderer.sortingOrder), chubeTile);
     }
 
     void Update()
@@ -43,7 +44,10 @@ public class Chube : MonoBehaviour
         BuildCursor.SetActive(true);
         BuildMode.SetActive(true);
 
-        troops.troopsOn = false;
-        troops.resetTile();
+        if (troops.troopsOn)
+        {
+            troops.troopsOn = false;
+            troops.resetTile();
+        }
     }
 }

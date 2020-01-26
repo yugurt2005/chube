@@ -12,6 +12,7 @@ public class BuildMode : MonoBehaviour
     public Tile tile;
     public Tile chube;
     public Tilemap tilemap;
+    public TilemapRenderer tilemapRenderer;
     public BuildCursor cursor;
     public Materials materials;
 
@@ -20,6 +21,7 @@ public class BuildMode : MonoBehaviour
         // Cursor color is red by default
         cursor.render.color = Color.red;
         Vector3Int cellPosition = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        cellPosition.z = tilemapRenderer.sortingOrder;
 
         // If current cell is available, set cursor to green
         if (checkAvailability(cellPosition))

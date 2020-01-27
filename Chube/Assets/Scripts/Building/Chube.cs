@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
+// NOTE TO SELF: FIX THIS SCRIPT ITS GROSS
 public class Chube : MonoBehaviour
 {
     public bool on = false;

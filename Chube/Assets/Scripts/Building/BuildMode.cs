@@ -9,12 +9,12 @@ using UnityEngine.Tilemaps;
 
 public class BuildMode : MonoBehaviour
 {
-    public Tile tile;
     public Tile chube;
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
     public BuildCursor cursor;
     public Materials materials;
+    public BuildButtonsController controller;
 
     void Update()
     {
@@ -29,9 +29,10 @@ public class BuildMode : MonoBehaviour
             cursor.render.color = Color.green;
 
             // If it's available and the player clicks the mouse, build a floor tile there
-            if (Input.GetButton("Fire1"))
+            if (Input.GetButton("Fire1") && materials.amount > controller.cost)
             {
-                materials.amount -= 5;
+                Tile tile = controller.currentTile;
+                materials.amount -= controller.cost;
                 tilemap.SetTile(cellPosition, tile);
             }
         }        
@@ -40,7 +41,7 @@ public class BuildMode : MonoBehaviour
     // Checks if any of the surrounding 4 tiles contains a floor
     private bool checkAvailability(Vector3Int pos)
     {
-        if (tilemap.HasTile(pos) || materials.amount < 5) return false;
+        if (tilemap.HasTile(pos) || materials.amount < controller.cost) return false;
 
         ArrayList borderTiles = new ArrayList();
         borderTiles.Add(new Vector3Int(pos.x, pos.y + 1, pos.z));

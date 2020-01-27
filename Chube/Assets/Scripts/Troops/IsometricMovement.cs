@@ -73,6 +73,7 @@ public class IsometricMovement : MonoBehaviour
         return isometric;
     }
 
+// NOTE TO SELF: FIX BUTTON SCRIPTS LATER THEYRE GROSS
     void onButtonPress()
     {
         troopsOn = !troopsOn;

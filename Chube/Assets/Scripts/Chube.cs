@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class Chube : MonoBehaviour
 {
-    public bool switchedMode = false;
+    public bool on = false;
 
     public GameObject BuildMode;
     public GameObject BuildCursor;
@@ -28,8 +28,8 @@ public class Chube : MonoBehaviour
 
     void onButtonPress()
     {
-        switchedMode = !switchedMode;
-        if (switchedMode) turnOn();
+        on = !on;
+        if (on) turnOn();
         else turnOff();
     }
 

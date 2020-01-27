@@ -17,11 +17,13 @@ public class IsometricMovement : MonoBehaviour
     public bool troopsOn = false;
 
     private Vector3Int previousTile;
+    private bool firstTouch = false;
 
     public Button troopButton;
     public Tilemap tilemap;
     public Tile editTile;
     public Tile neutralTile;
+    public TilemapRenderer tilemapRenderer;
     public GameObject buildMode;
     public GameObject buildCursor;
     public Chube chube;
@@ -36,24 +38,26 @@ public class IsometricMovement : MonoBehaviour
 
     void Update()
     {
-        Vector3Int target = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        Vector3Int mouseTile = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        mouseTile.z = tilemapRenderer.sortingOrder;
 
-        if (troopsOn && tilemap.HasTile(target) && transform.position != tilemap.GetCellCenterWorld(target))
-        {    
+        if (troopsOn && tilemap.HasTile(mouseTile))
+        {          
             if (Input.GetButtonDown("Fire1"))
             {
                 // IMPLEMENT PATHFINDING HERE
-
             }
 
-            if (tilemap.GetTile(target) == neutralTile)
+            if (tilemap.GetTile(mouseTile) == neutralTile)
             {
-                tilemap.SetTile(target, editTile);
+                
+                tilemap.SetTile(mouseTile, editTile);
 
-                if (previousTile != target)
+                if (previousTile != mouseTile)
                 {
-                    tilemap.SetTile(previousTile, neutralTile);
-                    previousTile = target;
+                    if (firstTouch) tilemap.SetTile(previousTile, neutralTile);
+                    previousTile = mouseTile;
+                    firstTouch = true;                
                 }
             }
         }
@@ -76,14 +80,14 @@ public class IsometricMovement : MonoBehaviour
         if (troopsOn)
         {
             chube.turnOff();
-            chube.switchedMode = !chube.switchedMode;
+            chube.on = !chube.on;
         }
         else resetTile();
     }
 
     public void resetTile()
     {
-        tilemap.SetTile(previousTile, neutralTile);
+        if (tilemap.HasTile(previousTile)) tilemap.SetTile(previousTile, neutralTile);
     }
 
 }

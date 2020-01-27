@@ -21,7 +21,6 @@ public class DebrisInteraction : MonoBehaviour
     void Update()
     {
         if (health <= 0) {
-            Debug.Log("Broke a debris");
             materials.amount += Random.Range(2, 25);
             self.enabled = false;
             health = 5;
@@ -33,7 +32,6 @@ public class DebrisInteraction : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {            
             health--;
-            Debug.Log("Hit, health at " + health);
         }
     }
 }

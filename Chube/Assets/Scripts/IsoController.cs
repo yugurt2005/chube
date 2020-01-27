@@ -18,7 +18,7 @@ public class IsoController : MonoBehaviour {
 	IEnumerator Move(Vector3Int target) {
 		isoPathfinder.originLocation = tilemap.WorldToCell(transform.position);
 		isoPathfinder.destinationLocation = tilemap.WorldToCell(target);
-		Debug.Log (isoPathfinder.originLocation + " : " + isoPathfinder.destinationLocation);
+		//Debug.Log (isoPathfinder.originLocation + " : " + isoPathfinder.destinationLocation);
 		IEnumerable<Vector3Int> path = isoPathfinder.BackPropagatePath ();
         
 

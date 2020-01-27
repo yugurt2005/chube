@@ -5,8 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class LightBehavior : MonoBehaviour
 {
-    public Tilemap tilemap;
-
     // Update is called once per frame
     void Update()
     {

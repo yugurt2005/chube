@@ -10,6 +10,7 @@ public class Chube : MonoBehaviour
 
     public GameObject BuildMode;
     public GameObject BuildCursor;
+    public GameObject BuildMenu;
     public IsometricMovement troops;
     public Button BuildModeButton;
     public Tilemap tilemap;
@@ -37,12 +38,14 @@ public class Chube : MonoBehaviour
     {
         BuildCursor.SetActive(false);
         BuildMode.SetActive(false);
+        BuildMenu.SetActive(false);
     }
 
     public void turnOn()
     {
         BuildCursor.SetActive(true);
         BuildMode.SetActive(true);
+        BuildMenu.SetActive(true);
 
         if (troops.troopsOn)
         {

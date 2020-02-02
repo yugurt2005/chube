@@ -9,6 +9,7 @@ public class BuildChoiceButton : MonoBehaviour
     public Tile tile;
     public int cost;
     public Button button;
+    public float buildTime;
 
     public BuildButtonsController controller;
 
@@ -20,5 +21,6 @@ public class BuildChoiceButton : MonoBehaviour
     public void switchTile() {
         controller.currentTile = tile;
         controller.cost = cost;
+        controller.buildTime = buildTime;
     }
 }

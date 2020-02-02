@@ -7,4 +7,5 @@ public class BuildButtonsController : MonoBehaviour
 {
     public Tile currentTile;
     public int cost = 5;
+    public float buildTime = 5f;
 }

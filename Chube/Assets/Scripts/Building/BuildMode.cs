@@ -10,6 +10,7 @@ using UnityEngine.Tilemaps;
 public class BuildMode : MonoBehaviour
 {
     public Tile chube;
+    public Tile buildProcessTile;
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
     public BuildCursor cursor;
@@ -29,11 +30,14 @@ public class BuildMode : MonoBehaviour
             cursor.render.color = Color.green;
 
             // If it's available and the player clicks the mouse, build a floor tile there
-            if (Input.GetButton("Fire1") && materials.amount > controller.cost)
+            if (Input.GetButton("Fire1") && materials.amount >= controller.cost)
             {
+                // create coroutine of building
+                
                 Tile tile = controller.currentTile;
                 materials.amount -= controller.cost;
-                tilemap.SetTile(cellPosition, tile);
+                tilemap.SetTile(cellPosition, buildProcessTile);
+                StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));
             }
         }        
     }
@@ -55,5 +59,16 @@ public class BuildMode : MonoBehaviour
         }
 
         return false;
+    }
+
+    IEnumerator buildNewTile(Tile tile, Vector3Int pos, float time)
+    {
+        bool done = false;
+        if (done) yield break;
+
+        yield return new WaitForSecondsRealtime(time);
+        tilemap.SetTile(pos, tile);
+
+        done = true;
     }
 }

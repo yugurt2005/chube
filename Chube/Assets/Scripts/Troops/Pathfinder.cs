@@ -19,6 +19,7 @@ public class State {
 
 public class Pathfinder : MonoBehaviour {
 	public Tilemap tilemap;
+    public Tile walkable;
 
 	public Vector3Int originLocation;
 	public Vector3Int destinationLocation;
@@ -57,11 +58,13 @@ public class Pathfinder : MonoBehaviour {
 
 					if (Mathf.Abs(deltaX) == Mathf.Abs(deltaY))
 						continue;
-					
-					List<State> states = new List<State>();
+                    
+                    if (tilemap.GetTile(branch.position) != walkable)
+                        continue;
+
+                    List<State> states = new List<State>();
 					states.AddRange(open);
-					states.AddRange(closed);
-					
+					states.AddRange(closed);					
 					IEnumerable<float> optimal = 
 						states.Where(
 						state => branch.position == state.position).Select(

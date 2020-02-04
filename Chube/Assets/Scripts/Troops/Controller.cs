@@ -5,10 +5,17 @@ using UnityEngine.Tilemaps;
 
 public class Controller : MonoBehaviour {
 	public Tilemap tilemap;
-	public Pathfinder pathfinder;
+    public TilemapRenderer tilemapRenderer;
+
+    public Pathfinder pathfinder;
 	public float speed;
 
-	void Awake () {
+    private void Start()
+    {
+        transform.position = tilemap.CellToWorld(new Vector3Int(1, 0, tilemapRenderer.sortingOrder));
+    }
+
+    void Awake () {
 		pathfinder = GetComponent<Pathfinder>();
 		pathfinder.tilemap = tilemap;
 	}
@@ -23,7 +30,9 @@ public class Controller : MonoBehaviour {
 
 	IEnumerator Move(Vector3 target) {
 		pathfinder.destinationLocation = tilemap.WorldToCell(transform.position);
+        pathfinder.destinationLocation.z = tilemapRenderer.sortingOrder;
 		pathfinder.originLocation = tilemap.WorldToCell(target);
+        pathfinder.originLocation.z = tilemapRenderer.sortingOrder;
 		IEnumerable<Vector3Int> path = pathfinder.BackPropagatePath ();
 
 		foreach (Vector3Int location in path) {

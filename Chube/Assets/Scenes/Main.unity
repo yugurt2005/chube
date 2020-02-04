@@ -2628,6 +2628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1015716841}
+  tilemapRenderer: {fileID: 1015716840}
   pathfinder: {fileID: 1757277781}
   speed: 6
 --- !u!114 &1757277781
@@ -2643,6 +2644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1015716841}
+  walkable: {fileID: 11400000, guid: ffe2afd810d691043bb96ce54560cbb4, type: 2}
   originLocation: {x: 0, y: 0, z: 0}
   destinationLocation: {x: 0, y: 0, z: 0}
 --- !u!1 &1818595285

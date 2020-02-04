@@ -4,9 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-
-// SEE THE BOTTOM OF THE SCRIPT
-
 public class State {
 	public Vector3Int position;
 
@@ -20,21 +17,16 @@ public class State {
 	}
 }
 
-public class IsoPathfinder : MonoBehaviour {
-	Tilemap tilemap;
+public class Pathfinder : MonoBehaviour {
+	public Tilemap tilemap;
 
 	public Vector3Int originLocation;
 	public Vector3Int destinationLocation;
-
-	public IsoPathfinder(Tilemap _tilemap) {
-		tilemap = _tilemap;
-	}
 
 	public IEnumerable<Vector3Int> BackPropagatePath () {
 		State state = ForwardPropagatePath ();
 		while (state != null) {
 			yield return state.position;
-			Debug.Log (state.position);
 			state = state.parent;
 		}
 	}
@@ -48,8 +40,8 @@ public class IsoPathfinder : MonoBehaviour {
 		List<State> open = new List<State> () { start };
 		List<State> closed = new List<State> () { };
 
-		int iterations = 0;
-		while(open.Count > 0 && iterations <= 100) {
+		int iterations = 0;		
+		while(open.Count > 0 && iterations <= 1000) {
 			State root = open.Aggregate(open[0], (optimal, next) => next.fCost < optimal.fCost ? next : optimal);
 
 			open.Remove (root);
@@ -63,36 +55,28 @@ public class IsoPathfinder : MonoBehaviour {
 					branch.hCost = (branch.position - destinationLocation).magnitude;
 					branch.parent = root;
 
+					if (Mathf.Abs(deltaX) == Mathf.Abs(deltaY))
+						continue;
+					
+					List<State> states = new List<State>();
+					states.AddRange(open);
+					states.AddRange(closed);
+					
+					IEnumerable<float> optimal = 
+						states.Where(
+						state => branch.position == state.position).Select(
+						state => state.fCost);
+					if ((optimal.Count() > 1 ? optimal.Min() : float.MaxValue) <= branch.fCost)
+						continue;
+										
 					if (branch.position == destinationLocation)
 						return branch;
-
-					try {
-						if (deltaX == 0 && deltaY == 0)
-							continue;
-						if (tilemap.GetTile(branch.position).name != "BuildingTile")
-							continue;
-						if (open.Where (state => state.position == branch.position).Select(state => state.fCost).Max() > branch.fCost)
-							continue;
-						if (closed.Where (state => state.position == branch.position).Select (state => state.fCost).Max () > branch.fCost)
-							continue;
-					} catch { }
-
+					
 					open.Add (branch);
 				}
 			}
-
-			iterations++;
+            iterations++;
 		}
-
 		return null;
 	}
-
-    /*
-    public Vector3Int[] getPath() {
-        if it's possible,
-        returns a Vector3Int[] containing all the positions in the path
-        so then it'd be really nice to implement into scripts like IsometricMovement
-        and we won't need a buncha extra stuff
-    }
-    */
 }

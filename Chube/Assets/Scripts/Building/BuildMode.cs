@@ -37,6 +37,7 @@ public class BuildMode : MonoBehaviour
                 Tile tile = controller.currentTile;
                 materials.amount -= controller.cost;
                 tilemap.SetTile(cellPosition, buildProcessTile);
+                
                 StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));
             }
         }        
@@ -61,14 +62,12 @@ public class BuildMode : MonoBehaviour
         return false;
     }
 
+    // BUG LOL
     IEnumerator buildNewTile(Tile tile, Vector3Int pos, float time)
     {
-        bool done = false;
-        if (done) yield break;
-
         yield return new WaitForSecondsRealtime(time);
         tilemap.SetTile(pos, tile);
-
-        done = true;
+        Debug.Log("called");
     }
+    
 }

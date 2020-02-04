@@ -20,7 +20,6 @@ public class TroopMode : MonoBehaviour
     public Tile editTile;
     public Tile neutralTile;
     public TilemapRenderer tilemapRenderer;
-    public IsoPathfinder pathfinder;
 
     public float speed = 0.5f;
 
@@ -34,25 +33,16 @@ public class TroopMode : MonoBehaviour
         Vector3Int mouseTile = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         mouseTile.z = tilemapRenderer.sortingOrder;
 
-        if (tilemap.HasTile(mouseTile))
-        {          
-            if (Input.GetButtonDown("Fire1"))
-            {
-                // IMPLEMENT PATHFINDING HERE
-            }
+        if (tilemap.HasTile(mouseTile) && tilemap.GetTile(mouseTile) == neutralTile)
+        {                       
+            tilemap.SetTile(mouseTile, editTile);
 
-            if (tilemap.GetTile(mouseTile) == neutralTile)
+            if (previousTile != mouseTile)
             {
-                
-                tilemap.SetTile(mouseTile, editTile);
-
-                if (previousTile != mouseTile)
-                {
-                    if (firstTouch) tilemap.SetTile(previousTile, neutralTile);
-                    previousTile = mouseTile;
-                    firstTouch = true;                
-                }
-            }
+                if (firstTouch) tilemap.SetTile(previousTile, neutralTile);
+                previousTile = mouseTile;
+                firstTouch = true;                
+            }            
         }
     }
 

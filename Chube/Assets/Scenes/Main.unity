@@ -287,7 +287,7 @@ Material:
     - _Shear: 5
     - _Size: 30
     - _Skew: 0
-    - _Speed: 0.59
+    - _Speed: 0.75
     m_Colors:
     - _Color1: {r: 0.2830189, g: 1, b: 0.7543617, a: 0.34901962}
     - _Color2: {r: 0, g: 0.46268654, b: 1, a: 0.17254902}
@@ -1898,24 +1898,6 @@ MonoBehaviour:
   troopButton: {fileID: 1327911614}
   buildButton: {fileID: 15427400}
   emptyMode: {fileID: 1181621124}
---- !u!4 &1140797641 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-    type: 3}
-  m_PrefabInstance: {fileID: 1057433779958559009}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1140797646 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8216433905255164360, guid: cc15dcf5067c24140b7adb809d04ff94,
-    type: 3}
-  m_PrefabInstance: {fileID: 1057433779958559009}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be2c85123bac3664ca483cab1fd20609, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1175612771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,7 +1931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color1: {r: 0.2830189, g: 1, b: 0.7543617, a: 0.34901962}
   color2: {r: 0, g: 0.46268654, b: 1, a: 0.17254902}
-  speed: 0.59
+  speed: 0.75
   size: 30
   skew: 0
   shear: 5
@@ -2011,8 +1993,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175612771}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.3354665, y: -2.3290613, z: 239.30203}
-  m_LocalScale: {x: 69.76, y: 40.233883, z: 5}
+  m_LocalPosition: {x: -0.96, y: -2.41, z: 239.30203}
+  m_LocalScale: {x: 67.68116, y: 37.856064, z: 5}
   m_Children: []
   m_Father: {fileID: 1597670076}
   m_RootOrder: 2
@@ -2518,7 +2500,6 @@ MonoBehaviour:
   editTile: {fileID: 11400000, guid: dac8eae67b1c37047ab0a718362456d2, type: 2}
   neutralTile: {fileID: 11400000, guid: ffe2afd810d691043bb96ce54560cbb4, type: 2}
   tilemapRenderer: {fileID: 1015716840}
-  pathfinder: {fileID: 1140797646}
   speed: 0.5
 --- !u!4 &1666154363
 Transform:
@@ -2562,13 +2543,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1757277779}
   - component: {fileID: 1757277778}
+  - component: {fileID: 1757277781}
+  - component: {fileID: 1757277780}
   m_Layer: 0
-  m_Name: Troops
+  m_Name: Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1757277778
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2607,15 +2590,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 74455d372e70e7540b1c8159a5286e31, type: 3}
+  m_Color: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.2, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1757277779
@@ -2626,13 +2609,42 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1757277777}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.53, y: -0.07, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1140797641}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1757277780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757277777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4d30b3937376146b70d108c5b99ace, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 1015716841}
+  pathfinder: {fileID: 1757277781}
+  speed: 6
+--- !u!114 &1757277781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757277777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96097aa365891414796aa5ca0ce04675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 1015716841}
+  originLocation: {x: 0, y: 0, z: 0}
+  destinationLocation: {x: 0, y: 0, z: 0}
 --- !u!1 &1818595285
 GameObject:
   m_ObjectHideFlags: 0
@@ -2841,7 +2853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4979124222e26de40b186a36eee2ab4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amount: 0
+  amount: 100
 --- !u!4 &2124627791
 Transform:
   m_ObjectHideFlags: 0
@@ -2856,125 +2868,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1057433779958559009
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1757277779}
-    m_Modifications:
-    - target: {fileID: -1794475928072950165, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: tilemap
-      value: 
-      objectReference: {fileID: 1015716841}
-    - target: {fileID: -1794475928072950165, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: isoPathfinder
-      value: 
-      objectReference: {fileID: 1140797646}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604712, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604713, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: m_Name
-      value: Wolves
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604715, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: troopButton
-      value: 
-      objectReference: {fileID: 1327911611}
-    - target: {fileID: 1057433780967604715, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: tilemap
-      value: 
-      objectReference: {fileID: 1015716841}
-    - target: {fileID: 1057433780967604715, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: buildMode
-      value: 
-      objectReference: {fileID: 62749669}
-    - target: {fileID: 1057433780967604715, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: chube
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1057433780967604715, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: pathfinder
-      value: 
-      objectReference: {fileID: 1140797646}
-    - target: {fileID: 1057433780967604715, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: buildCursor
-      value: 
-      objectReference: {fileID: 1439850282}
-    - target: {fileID: 1057433780967604715, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: renderer
-      value: 
-      objectReference: {fileID: 1015716840}
-    - target: {fileID: 1057433780967604715, guid: cc15dcf5067c24140b7adb809d04ff94,
-        type: 3}
-      propertyPath: tilemapRenderer
-      value: 
-      objectReference: {fileID: 1015716840}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cc15dcf5067c24140b7adb809d04ff94, type: 3}
 --- !u!1001 &3310196654420303857
 PrefabInstance:
   m_ObjectHideFlags: 0

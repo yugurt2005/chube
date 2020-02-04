@@ -16,6 +16,7 @@ public class TroopModeButton : MainButton
         troopButton.onClick.AddListener(onButtonPress);
     }
 
+    // Overrides turnOn and turnOff functions
     public override void turnOn()
     {
         controller.mode = 2;

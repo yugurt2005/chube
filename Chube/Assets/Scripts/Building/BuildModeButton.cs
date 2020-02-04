@@ -19,6 +19,7 @@ public class BuildModeButton : MainButton
         button.onClick.AddListener(onButtonPress);
     }
 
+    // Overrides turnOn and turnOff functions
     public override void turnOn()
     {
         controller.mode = 1;

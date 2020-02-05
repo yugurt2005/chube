@@ -51,7 +51,7 @@ public class DebrisMovement : MonoBehaviour
 
     Vector3 getPositionOnPerimeter(float length)
     {
-        Vector3 pos =new Vector3(bgRect.offsetMin.x, bgRect.offsetMin.y, 0);
+        Vector3 pos = new Vector3(bgRect.offsetMin.x, bgRect.offsetMin.y, 0);
 
         if (length <= width)
         {

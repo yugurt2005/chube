@@ -17,8 +17,7 @@ public class Scroll : MonoBehaviour
 
     void Update()
     {
-        if (cam.orthographicSize > 15.4) cam.orthographicSize = 15.39f;
-        else if (cam.orthographicSize < 3) cam.orthographicSize = 3.01f;
+        cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, 3f, 15.4f);
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0) cam.orthographicSize += scroll * -3.5f;        

@@ -62,7 +62,9 @@ public class BuildMode : MonoBehaviour
         return false;
     }
 
-    // BUG LOL
+    // BUG LOL - whenever build mode is exited in middle of building, it will build forever.
+    //possible fix: make user wait until everything done building (so user has to strategically build)
+    //OR be smart and fix this so that it will just finish by itself
     IEnumerator buildNewTile(Tile tile, Vector3Int pos, float time)
     {
         yield return new WaitForSecondsRealtime(time);

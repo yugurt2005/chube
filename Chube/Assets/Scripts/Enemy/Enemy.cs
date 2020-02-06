@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
@@ -13,6 +14,20 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
 
     public float health = 10f;
     public int attackrange = 2;
+    public float shipSpeed = 5f;
+    private bool moveasship = true;
+
+    private Tilemap tilemap;
+
+    public void setInfo(Tilemap tilemap) //called by instantiator
+    {
+        this.tilemap = tilemap;
+    }
+
+    private void Start()
+    {
+        transform.LookAt(new Vector2(0f, 0f));
+    }
 
     public void takeDamage(float damage)
     {
@@ -22,10 +37,21 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
     private void Update()
     {
         //find enemy in attack range and fire. -NOTE: ENEMY CAN'T MOVE WHILE SHOOTING.
-    }
-
-    private void FixedUpdate()
-    {
-        //put movement and pathfinding here
+        if (moveasship)
+        {
+            Vector3Int tilemappos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(transform.position)); //doesn't work
+            if (tilemap.HasTile(tilemappos))
+            {
+                moveasship = true;
+                return;
+            }
+            transform.LookAt(new Vector3(0f, 0f, 0f));
+            transform.Translate(transform.forward * shipSpeed * Time.deltaTime);
+        }
+        else
+        {
+            Destroy(gameObject);
+            //attack/move tile and do pathfinding
+        }
     }
 }

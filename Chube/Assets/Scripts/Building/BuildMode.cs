@@ -48,21 +48,23 @@ public class BuildMode : MonoBehaviour
     {
         if (tilemap.HasTile(pos) || materials.amount < controller.cost) return false;
 
-        ArrayList borderTiles = new ArrayList();
-        borderTiles.Add(new Vector3Int(pos.x, pos.y + 1, pos.z));
-        borderTiles.Add(new Vector3Int(pos.x, pos.y - 1, pos.z));
-        borderTiles.Add(new Vector3Int(pos.x + 1, pos.y, pos.z));
-        borderTiles.Add(new Vector3Int(pos.x - 1, pos.y, pos.z));
+        Vector3Int[] borderTiles = new Vector3Int[4];
+        borderTiles[0] = new Vector3Int(pos.x, pos.y + 1, pos.z);
+        borderTiles[1] = new Vector3Int(pos.x, pos.y - 1, pos.z);
+        borderTiles[2] = new Vector3Int(pos.x + 1, pos.y, pos.z);
+        borderTiles[3] = new Vector3Int(pos.x - 1, pos.y, pos.z);
 
-        foreach (Vector3Int borderTile in borderTiles)
+        for (int i = 0; i < 4; i ++)
         {
-            if (tilemap.HasTile(borderTile)) return true;
+            if (tilemap.HasTile(borderTiles[i])) return true;
         }
 
         return false;
     }
 
-    // BUG LOL
+    // BUG LOL - whenever build mode is exited in middle of building, it will build forever.
+    //possible fix: make user wait until everything done building (so user has to strategically build)
+    //OR be smart and fix this so that it will just finish by itself
     IEnumerator buildNewTile(Tile tile, Vector3Int pos, float time)
     {
         yield return new WaitForSecondsRealtime(time);

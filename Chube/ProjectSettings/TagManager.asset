@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Chube
   - Building
+  - Troop
+  - Enemy
   layers:
   - Default
   - TransparentFX

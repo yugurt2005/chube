@@ -96,7 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   attackrange: 2
-  shipSpeed: 10
+  shipSpeed: 4
 --- !u!61 &2057929957895858635
 BoxCollider2D:
   m_ObjectHideFlags: 0

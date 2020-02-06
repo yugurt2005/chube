@@ -45,12 +45,15 @@ public class DebrisMovement : MonoBehaviour
 
     void setNewPath()
     {
-        transform.position = getPositionOnPerimeter(Random.Range(0, perimeter));
-        target = getPositionOnPerimeter(Random.Range(0, perimeter));
+        transform.position = getPositionOnPerimeter();
+        target = getPositionOnPerimeter();
     }
 
-    Vector3 getPositionOnPerimeter(float length)
+    
+
+    public Vector3 getPositionOnPerimeter()
     {
+        float length = Random.Range(0, perimeter);
         Vector3 pos = new Vector3(bgRect.offsetMin.x, bgRect.offsetMin.y, 0);
 
         if (length <= width)

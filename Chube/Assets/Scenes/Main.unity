@@ -307,7 +307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &62749670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,18 +322,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chube: {fileID: 11400000, guid: 878b155406d28514eb8965ea2fc16c54, type: 2}
   buildProcessTile: {fileID: 11400000, guid: 9cfe92032e200f148afd3269aa1c060e, type: 2}
-  chubator: {fileID: 11400000, guid: 37940ff5c9bdbe247a0ac146e2b9b259, type: 2}
   tilemap: {fileID: 1015716841}
   tilemapRenderer: {fileID: 1015716840}
   cursor: {fileID: 1439850283}
   materials: {fileID: 2124627790}
   controller: {fileID: 354293687}
-  prefabChubatorController: {fileID: 4771083200783123073, guid: 3199f819f32235c4c835be9c83e6966f,
-    type: 3}
-  prefabWolf: {fileID: 1344853874796227960, guid: 6c4b123f5413a1345bc990503fd7bf07,
-    type: 3}
-  wolftime: 20
-  wolfcost: 10
+  mainButtonController: {fileID: 1124885198}
 --- !u!4 &62749671
 Transform:
   m_ObjectHideFlags: 0
@@ -1072,7 +1066,7 @@ PrefabInstance:
     - target: {fileID: 1370935271128146008, guid: ee9f60ed4b141644983939c88eef070f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1370935271128146008, guid: ee9f60ed4b141644983939c88eef070f,
         type: 3}
@@ -2281,6 +2275,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1015716841}
   walkable: {fileID: 11400000, guid: ffe2afd810d691043bb96ce54560cbb4, type: 2}
+  walkable2: {fileID: 11400000, guid: dac8eae67b1c37047ab0a718362456d2, type: 2}
+  walkable3: {fileID: 11400000, guid: 9cfe92032e200f148afd3269aa1c060e, type: 2}
   originLocation: {x: 0, y: 0, z: 0}
   destinationLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &1293472181
@@ -2633,7 +2629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1666154362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2663,7 +2659,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1710275995 stripped
 GameObject:
@@ -2903,7 +2899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4979124222e26de40b186a36eee2ab4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amount: 100
+  amount: 1000
 --- !u!4 &2124627791
 Transform:
   m_ObjectHideFlags: 0

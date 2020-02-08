@@ -11,16 +11,20 @@ public class BuildMode : MonoBehaviour
 {
     public Tile chube;
     public Tile buildProcessTile;
-    public Tile chubator;
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
     public BuildCursor cursor;
     public Materials materials;
     public BuildButtonsController controller;
+    public MainButtonsController mainButtonController;
+
+        /*
+     * FOR CHUBATORS LATER
     public GameObject prefabChubatorController;
     public GameObject prefabWolf;
     public float wolftime = 20f;
     public int wolfcost = 10;
+    */
 
     void Update()
     {
@@ -67,13 +71,13 @@ public class BuildMode : MonoBehaviour
         return false;
     }
 
-    // BUG LOL - whenever build mode is exited in middle of building, it will build forever.
-    //possible fix: make user wait until everything done building (so user has to strategically build)
-    //OR be smart and fix this so that it will just finish by itself
-    IEnumerator buildNewTile(Tile tile, Vector3Int pos, float time)
+    public IEnumerator buildNewTile(Tile tile, Vector3Int pos, float time)
     {
         yield return new WaitForSecondsRealtime(time);
-        if (tile == chubator) {
+        /*
+         * FOR CHUBATORS LATER
+        if (tile == chubator)
+        {
             GameObject objChubatorController = (GameObject)Instantiate(prefabChubatorController);
             ChubatorController chubatorController = objChubatorController.GetComponent<ChubatorController>();
             if (chubatorController != null)
@@ -81,8 +85,8 @@ public class BuildMode : MonoBehaviour
                 chubatorController.setInfo(tilemap, pos, prefabWolf, wolftime, wolfcost);
             }
         }
+        */
         tilemap.SetTile(pos, tile);
-        Debug.Log("called");
     }
-    
+
 }

@@ -47,7 +47,6 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
             Vector3Int tilemappos = tilemap.WorldToCell(transform.position);
             tilemappos.z = tilemapRenderer.sortingOrder;
 
-            // For some reason, it only detects when it's on the chube
             if (tilemap.HasTile(tilemappos))
             {
                 shipMode = false;

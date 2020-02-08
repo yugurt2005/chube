@@ -26,6 +26,9 @@ public class ChubatorController : MonoBehaviour
         {
             if (materials >= cost)
             {
+                // Maybe assign borderTiles on instantiation, because it won't change
+                // so you don't have to do calculations every time
+
                 Vector3Int[] borderTiles = new Vector3Int[4]; //get bordering tiles
                 borderTiles[0] = new Vector3Int(pos.x, pos.y + 1, pos.z);
                 borderTiles[1] = new Vector3Int(pos.x, pos.y - 1, pos.z);

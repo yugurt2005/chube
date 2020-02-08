@@ -37,7 +37,6 @@ public class BuildModeButton : MainButton
     public void setActivity(bool mode)
     {
         BuildCursor.SetActive(mode);
-        BuildMode.SetActive(mode);
         BuildMenu.SetActive(mode);
     }
 

@@ -19,7 +19,12 @@ public class State {
 
 public class Pathfinder : MonoBehaviour {
 	public Tilemap tilemap;
+
+    // NOTE: THIS IS TEMPORARY, just so that it can walk on highlighted and currently being built tiles. Later we can use an array lol
+  
     public Tile walkable;
+    public Tile walkable2;
+    public Tile walkable3;
 
 	public Vector3Int originLocation;
 	public Vector3Int destinationLocation;
@@ -58,8 +63,9 @@ public class Pathfinder : MonoBehaviour {
 
 					if (Mathf.Abs(deltaX) == Mathf.Abs(deltaY))
 						continue;
-                    
-                    if (tilemap.GetTile(branch.position) != walkable)
+
+                    TileBase branchTile = tilemap.GetTile(branch.position);
+                    if (branchTile != walkable && branchTile != walkable2 && branchTile != walkable3)
                         continue;
 
                     List<State> states = new List<State>();

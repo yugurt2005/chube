@@ -8,37 +8,24 @@ public class Controller : MonoBehaviour {
     public TilemapRenderer tilemapRenderer;
 
     public Pathfinder pathfinder;
-	public float speed;
 
-    private void Start()
+    private void Awake()
     {
-        transform.position = tilemap.CellToWorld(new Vector3Int(1, 0, tilemapRenderer.sortingOrder));
+        pathfinder.tilemap = tilemap;
     }
 
-    void Awake () {
-		pathfinder = GetComponent<Pathfinder>();
-		pathfinder.tilemap = tilemap;
-	}
-	
-	void FixedUpdate () {
-        if (Input.GetMouseButtonDown(0))
-		{
-			StopAllCoroutines();
-            StartCoroutine(Move(Camera.main.ScreenToWorldPoint(Input. mousePosition)));
-		}
-	}
-
-	IEnumerator Move(Vector3 target) {
-		pathfinder.destinationLocation = tilemap.WorldToCell(transform.position);
+    public IEnumerator Move(Transform character, Vector3 origin, Vector3 destination) {
+		pathfinder.destinationLocation = tilemap.WorldToCell(origin);
         pathfinder.destinationLocation.z = tilemapRenderer.sortingOrder;
-		pathfinder.originLocation = tilemap.WorldToCell(target);
+		pathfinder.originLocation = tilemap.WorldToCell(destination);
         pathfinder.originLocation.z = tilemapRenderer.sortingOrder;
+
 		IEnumerable<Vector3Int> path = pathfinder.BackPropagatePath ();
 
 		foreach (Vector3Int location in path) {
 			Vector3 localTarget = tilemap.GetCellCenterWorld(location);
-			while (transform.position != localTarget) {
-				transform.position = Vector3.MoveTowards (transform.position, localTarget, Time.deltaTime * speed);
+			while (character.position != localTarget) {
+				character.position = Vector3.MoveTowards (character.position, localTarget, Time.deltaTime);
 				yield return new WaitForFixedUpdate();
 			}
 		}

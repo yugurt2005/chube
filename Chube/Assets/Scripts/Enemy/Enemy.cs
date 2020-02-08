@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
      * Other enemies will do the opposite, and will move differently (jump tiles) and have different attacking methods.
      */
 
+    public Controller movementController;
+
     public float health = 10f;
     public int attackrange = 2;
     public float shipSpeed = 5f;
@@ -24,16 +26,18 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
     // Because you need the references because they're instantiated so you can't set the references in the editor
     public void onInstantiate(Tilemap tilemap, TilemapRenderer tilemapRenderer)
     {
-        chubePos = new Vector3Int(0, -1, tilemapRenderer.sortingOrder);
+        chubePos = new Vector3Int(0, 0, tilemapRenderer.sortingOrder);
         this.tilemap = tilemap;
         this.tilemapRenderer = tilemapRenderer;
+
+        movementController = GameObject.Find("Movement").GetComponent<Controller>();
     }
 
     public void takeDamage(float damage)
     {
         health -= damage;
     }
-
+    
     void Update()
     {
         //TODO: find enemy in attack range and fire. -NOTE: ENEMY CAN'T MOVE WHILE SHOOTING.
@@ -41,18 +45,17 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
         if (shipMode)
         {
             Vector3Int tilemappos = tilemap.WorldToCell(transform.position);
+            tilemappos.z = tilemapRenderer.sortingOrder;
+
             // For some reason, it only detects when it's on the chube
             if (tilemap.HasTile(tilemappos))
             {
                 shipMode = false;
-                return;
+                
+                StopAllCoroutines();
+                StartCoroutine(movementController.Move(transform, transform.position, chubePos));
             }
             transform.position = Vector3.MoveTowards(transform.position, tilemap.CellToWorld(chubePos), shipSpeed * Time.deltaTime);
-        }
-        else
-        {
-            //Debug.Log("Landed on tile");
-            //attack/move tile and do pathfinding
         }
     }
 }

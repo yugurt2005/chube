@@ -11,11 +11,16 @@ public class BuildMode : MonoBehaviour
 {
     public Tile chube;
     public Tile buildProcessTile;
+    public Tile chubator;
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
     public BuildCursor cursor;
     public Materials materials;
     public BuildButtonsController controller;
+    public GameObject prefabChubatorController;
+    public GameObject prefabWolf;
+    public float wolftime = 20f;
+    public int wolfcost = 10;
 
     void Update()
     {
@@ -68,6 +73,14 @@ public class BuildMode : MonoBehaviour
     IEnumerator buildNewTile(Tile tile, Vector3Int pos, float time)
     {
         yield return new WaitForSecondsRealtime(time);
+        if (tile == chubator) {
+            GameObject objChubatorController = (GameObject)Instantiate(prefabChubatorController);
+            ChubatorController chubatorController = objChubatorController.GetComponent<ChubatorController>();
+            if (chubatorController != null)
+            {
+                chubatorController.setInfo(tilemap, pos, prefabWolf, wolftime, wolfcost);
+            }
+        }
         tilemap.SetTile(pos, tile);
         Debug.Log("called");
     }

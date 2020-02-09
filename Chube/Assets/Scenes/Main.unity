@@ -1264,7 +1264,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
   - component: {fileID: 519420034}
   - component: {fileID: 519420033}
   m_Layer: 0
@@ -1282,21 +1281,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45163c545bd20fe42abd5fc07c57282f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panSpeed: 7.5
-  bgRect: {fileID: 1036574835}
-  camRect: {fileID: 519420032}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1450,6 +1434,11 @@ PrefabInstance:
       propertyPath: render
       value: 
       objectReference: {fileID: 1439850284}
+    - target: {fileID: -5297698339482207744, guid: ee9f60ed4b141644983939c88eef070f,
+        type: 3}
+      propertyPath: tilemap
+      value: 
+      objectReference: {fileID: 1015716841}
     - target: {fileID: 1370935271128146008, guid: ee9f60ed4b141644983939c88eef070f,
         type: 3}
       propertyPath: m_LocalPosition.x

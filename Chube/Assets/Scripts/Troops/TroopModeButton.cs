@@ -26,7 +26,6 @@ public class TroopModeButton : MainButton
 
     public override void turnOff()
     {
-        controller.mode = 0;
         troopController.resetTile();
         troopMode.SetActive(false);
         on = false;

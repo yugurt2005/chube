@@ -29,7 +29,6 @@ public class BuildModeButton : MainButton
 
     public override void turnOff()
     {
-        controller.mode = 0;
         setActivity(false);
         on = false;
     }

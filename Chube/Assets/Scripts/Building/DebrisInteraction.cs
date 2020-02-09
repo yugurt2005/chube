@@ -13,6 +13,9 @@ public class DebrisInteraction : MonoBehaviour
     public Collider2D col;
     public Materials materials;
 
+    public AudioSource hit;
+    public SFXController SFX;
+
     void Start()
     {
         col = GetComponent<Collider2D>();
@@ -30,7 +33,8 @@ public class DebrisInteraction : MonoBehaviour
     private void OnMouseOver()
     {
         if (Input.GetButtonDown("Fire1"))
-        {            
+        {
+            SFX.playSound(hit);
             health--;
         }
     }

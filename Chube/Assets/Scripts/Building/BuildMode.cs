@@ -14,11 +14,16 @@ public class BuildMode : MonoBehaviour
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
     public BuildCursor cursor;
+
     public Materials materials;
     public BuildButtonsController controller;
     public MainButtonsController mainButtonController;
 
-        /*
+    public AudioSource invalidClick;
+    public AudioSource build;
+    public SFXController SFX;
+
+    /*
      * FOR CHUBATORS LATER
     public GameObject prefabChubatorController;
     public GameObject prefabWolf;
@@ -28,28 +33,34 @@ public class BuildMode : MonoBehaviour
 
     void Update()
     {
-        // Cursor color is red by default
-        cursor.render.color = Color.red;
-        Vector3Int cellPosition = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        cellPosition.z = tilemapRenderer.sortingOrder;
-
-        // If current cell is available, set cursor to green
-        if (checkAvailability(cellPosition))
+        if (mainButtonController.mode == 1)
         {
-            cursor.render.color = Color.green;
+            // Cursor color is red by default
+            cursor.render.color = Color.red;
+            Vector3Int cellPosition = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            cellPosition.z = tilemapRenderer.sortingOrder;
 
-            // If it's available and the player clicks the mouse, build a floor tile there
-            if (Input.GetButton("Fire1") && materials.amount >= controller.cost)
+            // If current cell is available, set cursor to green
+            if (checkAvailability(cellPosition))
             {
-                // create coroutine of building
-                
-                Tile tile = controller.currentTile;
-                materials.amount -= controller.cost;
-                tilemap.SetTile(cellPosition, buildProcessTile);
-                
-                StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));
+                cursor.render.color = Color.green;
+
+                // If it's available and the player clicks the mouse, build a floor tile there
+                if (Input.GetButton("Fire1"))
+                {
+                    // create coroutine of building
+                    SFX.playSound(build);
+                    Tile tile = controller.currentTile;
+                    materials.amount -= controller.cost;
+                    tilemap.SetTile(cellPosition, buildProcessTile);
+
+                    StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));
+                }
             }
-        }        
+            else if (Input.GetButtonDown("Fire1")) {
+                SFX.playSound(invalidClick);
+            }
+        }
     }
 
     // Checks if any of the surrounding 4 tiles contains a floor

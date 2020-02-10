@@ -11,6 +11,7 @@ public class BuildMode : MonoBehaviour
 {
     public Tile chube;
     public Tile buildProcessTile;
+    public Tile builtTile;
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
     public BuildCursor cursor;
@@ -23,13 +24,15 @@ public class BuildMode : MonoBehaviour
     public AudioSource build;
     public SFXController SFX;
 
-    /*
-     * FOR CHUBATORS LATER
+    //FOR CHUBATORS LATER
+    // TODO after fighting is done: make interface of each troop with its cost & time for chubators,
+    // use it here instead of writing each one
+    public Tile chubator;
     public GameObject prefabChubatorController;
     public GameObject prefabWolf;
     public float wolftime = 20f;
     public int wolfcost = 10;
-    */
+    
 
     void Update()
     {
@@ -85,18 +88,17 @@ public class BuildMode : MonoBehaviour
     public IEnumerator buildNewTile(Tile tile, Vector3Int pos, float time)
     {
         yield return new WaitForSecondsRealtime(time);
-        /*
-         * FOR CHUBATORS LATER
+
+        // change to tag once we add scriptable tiles, then we can make different sprites for different chubators
+        // and still have things be simple
         if (tile == chubator)
         {
             GameObject objChubatorController = (GameObject)Instantiate(prefabChubatorController);
             ChubatorController chubatorController = objChubatorController.GetComponent<ChubatorController>();
-            if (chubatorController != null)
-            {
-                chubatorController.setInfo(tilemap, pos, prefabWolf, wolftime, wolfcost);
-            }
+            chubatorController.setInfo(tilemap, pos, prefabWolf, wolftime, wolfcost, materials, builtTile);
+
         }
-        */
+
         tilemap.SetTile(pos, tile);
     }
 

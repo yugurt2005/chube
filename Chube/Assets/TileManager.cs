@@ -8,6 +8,7 @@ public class TileManager : MonoBehaviour
 {
     public float health;
     public int maxHealth;
+    public bool isChube;
 
     public Tilemap tilemap;
     public TilemapRenderer tRenderer;
@@ -26,6 +27,9 @@ public class TileManager : MonoBehaviour
     {
         if (health <= 0) {
             Debug.Log("DESTROYED A STRUCTURE");
+            if (isChube) {
+                onChubeDeath();
+            }
             Vector3Int pos = tilemap.WorldToCell(transform.position);
             pos.z = tRenderer.sortingOrder;
             tilemap.SetTile(pos, null);
@@ -43,5 +47,12 @@ public class TileManager : MonoBehaviour
     public void damage(float amount) {
         //Debug.Log("STRUCTURE BEING DAMAGED. HEALTH AT: " + health);
         health -= amount;
+    }
+
+
+    private void onChubeDeath() {
+        Debug.Log("You died.");
+        Application.Quit();
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 }

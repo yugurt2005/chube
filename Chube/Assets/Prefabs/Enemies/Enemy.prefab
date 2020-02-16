@@ -101,7 +101,7 @@ MonoBehaviour:
   health: 100
   attackrange: 2
   structDamage: 0.05
-  shipSpeed: 3
+  shipSpeed: 1
   prefabBrush: {fileID: 11400000, guid: 898d964ba10cd9f46a82b323a3b697ca, type: 2}
 --- !u!61 &2057929957895858635
 BoxCollider2D:

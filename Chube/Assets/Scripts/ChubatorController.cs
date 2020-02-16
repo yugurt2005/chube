@@ -44,15 +44,22 @@ public class ChubatorController : MonoBehaviour
         Vector3Int mousePos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         mousePos.z = pos.z;
 
-        if (mousePos == pos && materials.amount >= cost)
+        if (mousePos == pos)
         {
             tilemap.SetTile(pos, highlighted);
+
             if (Input.GetButtonDown("Fire1"))
             {
-                Debug.Log("Fed chubator");
-                selfMaterials += cost;
-                materials.amount -= cost;
-                Debug.Log(selfMaterials);
+                if (materials.amount >= cost)
+                {
+                    Debug.Log("Fed chubator");
+                    selfMaterials += cost;
+                    materials.amount -= cost;
+                    Debug.Log(selfMaterials);
+                }
+                else {
+                    Debug.Log("Not enough materials to feed chubator!");
+                }
             }
         }
         else if (mousePos != pos) {

@@ -7,7 +7,7 @@ public class TilemapController : MonoBehaviour
 {
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
-    public Tile chubeTile;
+    public TileBase chubeTile;
 
     // Start is called before the first frame update
     void Start()

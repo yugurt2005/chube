@@ -24,7 +24,7 @@ public class DebrisInteraction : MonoBehaviour
     void Update()
     {
         if (health <= 0) {
-            materials.amount += Random.Range(2, 25);
+            materials.amount += Random.Range(2, 50);
             self.enabled = false;
             health = 5;
         }

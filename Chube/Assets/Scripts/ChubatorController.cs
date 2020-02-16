@@ -1,36 +1,36 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-// NOTE: THIS SCRIPT IS TEMPORARY & A MESS LOL
-// It's gonna be replaced with scriptable tiles later
-
 public class ChubatorController : MonoBehaviour
 {
+    public Tile normal;
+    public Tile highlighted;
     public Tilemap tilemap;
+    public TilemapRenderer tRenderer;
+    public Tile walkable;
+    public Materials materials;
+
     public Vector3Int pos;
     public GameObject prefabToSpawn;
     public int selfMaterials = 0;
-    private float time;
-    private float countdown;
+    public float time = 15f;
     public int cost;
-    public Tile walkable;
+
+    private float countdown;
     private Vector3Int[] borderTiles;
-    private Materials materials;
-    public SpriteRenderer spriteRenderer;
+    private bool firstTouch;
+    private Vector3Int previousTile;
 
-    // lol the pain of not scriptable tiles
-    public void setInfo(Tilemap tilemap, Vector3Int pos, GameObject prefabToSpawn, float time, int cost, Materials materials, Tile walkable)
+    void Start()
     {
-        this.tilemap = tilemap;
-        this.pos = pos;
-        transform.position = tilemap.GetCellCenterWorld(pos);
+        GameObject temp = GameObject.FindGameObjectWithTag("Tilemap");
+        tilemap = temp.GetComponent<Tilemap>();
+        tRenderer = temp.GetComponent<TilemapRenderer>();
 
-        this.prefabToSpawn = prefabToSpawn;
-        this.time = time;
-        this.cost = cost;
-        this.materials = materials;
-        this.walkable = walkable;
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        materials = GameObject.FindGameObjectWithTag("Materials").GetComponent<Materials>();
+        
+        pos = tilemap.WorldToCell(transform.position);
+        pos.z = tRenderer.sortingOrder;
 
         borderTiles = new Vector3Int[4]; //get bordering tiles
         borderTiles[0] = new Vector3Int(pos.x, pos.y + 1, pos.z);
@@ -41,19 +41,23 @@ public class ChubatorController : MonoBehaviour
 
     public void Update()
     {
-        Vector3 mousePos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        Vector3Int mousePos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         mousePos.z = pos.z;
+
         if (mousePos == pos && materials.amount >= cost)
         {
-            spriteRenderer.color = Color.green;
+            tilemap.SetTile(pos, highlighted);
             if (Input.GetButtonDown("Fire1"))
             {
+                Debug.Log("Fed chubator");
                 selfMaterials += cost;
                 materials.amount -= cost;
                 Debug.Log(selfMaterials);
             }
         }
-        else spriteRenderer.color = Color.white;
+        else if (mousePos != pos) {
+            tilemap.SetTile(pos, normal);
+        }
 
         if (countdown <= 0)
         {

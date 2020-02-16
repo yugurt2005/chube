@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEditor.Tilemaps;
 
 // NOTE: Before building the game (when we're finished), change the 'individual' rendering mode to 'chunk' and make a sprite atlas instead.
 // This will fix/make more efficient isometric rendering in the final build; this 'individual' rendering mode is just a temporary way to 
@@ -9,7 +10,12 @@ using UnityEngine.Tilemaps;
 
 public class BuildMode : MonoBehaviour
 {
+    public PrefabBrush prefabBrush;
+    public GameObject normal;
+    public GameObject chubator;
+
     public Tile chube;
+    public Tile chubatorTile;
     public Tile buildProcessTile;
     public Tile builtTile;
     public Tilemap tilemap;
@@ -23,16 +29,6 @@ public class BuildMode : MonoBehaviour
     public AudioSource invalidClick;
     public AudioSource build;
     public SFXController SFX;
-
-    //FOR CHUBATORS LATER
-    // TODO after fighting is done: make interface of each troop with its cost & time for chubators,
-    // use it here instead of writing each one
-    public Tile chubator;
-    public GameObject prefabChubatorController;
-    public GameObject prefabWolf;
-    public float wolftime = 20f;
-    public int wolfcost = 10;
-    
 
     void Update()
     {
@@ -89,17 +85,15 @@ public class BuildMode : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(time);
 
-        // change to tag once we add scriptable tiles, then we can make different sprites for different chubators
-        // and still have things be simple
-        if (tile == chubator)
+        if (tile == chubatorTile)
         {
-            GameObject objChubatorController = (GameObject)Instantiate(prefabChubatorController);
-            ChubatorController chubatorController = objChubatorController.GetComponent<ChubatorController>();
-            chubatorController.setInfo(tilemap, pos, prefabWolf, wolftime, wolfcost, materials, builtTile);
+            prefabBrush.Paint(tilemap, chubator, pos);
+        }
 
+        else {
+            prefabBrush.Paint(tilemap, normal, pos);
         }
 
         tilemap.SetTile(pos, tile);
     }
-
 }

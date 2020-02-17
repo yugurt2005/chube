@@ -9,6 +9,8 @@ public class Controller : MonoBehaviour {
 
     public Pathfinder pathfinder;
 
+    public float speed;
+
     private void Awake()
     {
         pathfinder.tilemap = tilemap;
@@ -25,7 +27,7 @@ public class Controller : MonoBehaviour {
 		foreach (Vector3Int location in path) {
 			Vector3 localTarget = tilemap.GetCellCenterWorld(location);
 			while (character.position != localTarget) {
-				character.position = Vector3.MoveTowards (character.position, localTarget, Time.deltaTime);
+                character.position = Vector3.MoveTowards(character.position, localTarget, Time.deltaTime * speed);
 				yield return new WaitForFixedUpdate();
 			}
 		}

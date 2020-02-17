@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
     private Tilemap tilemap;
     private TilemapRenderer tilemapRenderer;
 
-    public PrefabBrush prefabBrush;
     private TileManager structure;
 
     private Vector2[] directions = new Vector2[] {new Vector2(-1, 1), new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, -1)};
@@ -37,7 +36,7 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
         this.tilemap = tilemap;
         this.tilemapRenderer = tilemapRenderer;
 
-        movementController = GameObject.Find("Movement").GetComponent<Controller>();
+        movementController = GameObject.Find("EnemyMovement").GetComponent<Controller>();
     }
 
     public void takeDamage(float damage)

@@ -3,7 +3,12 @@ guid: 96097aa365891414796aa5ca0ce04675
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tilemap: {instanceID: 0}
+  - walkable1: {fileID: 11400000, guid: ffe2afd810d691043bb96ce54560cbb4, type: 2}
+  - walkable2: {fileID: 11400000, guid: ceec1100d3e243d4f80e05cee459f556, type: 2}
+  - walkable3: {fileID: 11400000, guid: dac8eae67b1c37047ab0a718362456d2, type: 2}
+  - walkable4: {fileID: 11400000, guid: 9cfe92032e200f148afd3269aa1c060e, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Now I realize this script is kind of useless after getting rid of "troop mode" & learning about buttons lol... ITS OK ILL KEEP IT JUST
+// IN CASE THERES MORE MAIN BUTTONS TO ADD
+// But later I'll get rid of if if not
+
 public class MainButtonsController : MonoBehaviour
 {
+    /*
     public int buttonPressed;
     public int mode;
     private bool foundButton;
 
-    public TroopModeButton troopButton;
     public BuildModeButton buildButton;
     public EmptySystem emptyMode;
 
@@ -23,7 +27,6 @@ public class MainButtonsController : MonoBehaviour
     {
         buttons.Add(emptyMode);
         buttons.Add(buildButton);
-        buttons.Add(troopButton);
     }
 
     void Update()
@@ -57,4 +60,5 @@ public class MainButtonsController : MonoBehaviour
             foundButton = false;
         }
     }
+    */
 }

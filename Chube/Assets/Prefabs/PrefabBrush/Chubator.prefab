@@ -98,6 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 20
+  isChube: 0
+  pollutedTile: {fileID: 11400000, guid: ceec1100d3e243d4f80e05cee459f556, type: 2}
   tilemap: {fileID: 1007617699840858494, guid: b7dbaa1c231051d479051f15ab44ccfe, type: 3}
   tRenderer: {fileID: 0}
   prefabBrush: {fileID: 11400000, guid: 898d964ba10cd9f46a82b323a3b697ca, type: 2}
@@ -183,8 +185,9 @@ MonoBehaviour:
   walkable: {fileID: 11400000, guid: ffe2afd810d691043bb96ce54560cbb4, type: 2}
   materials: {fileID: 0}
   pos: {x: 0, y: 0, z: 0}
-  prefabToSpawn: {fileID: 1344853874796227960, guid: 6c4b123f5413a1345bc990503fd7bf07,
+  troopPrefab: {fileID: 1344853874796227960, guid: 6c4b123f5413a1345bc990503fd7bf07,
     type: 3}
+  troopToSpawn: {fileID: 0}
   selfMaterials: 0
-  time: 15
+  time: 10
   cost: 20

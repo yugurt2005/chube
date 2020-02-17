@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
-// Inherits from MainButton class
-public class BuildModeButton : MainButton
+public class BuildModeButton : MonoBehaviour
 {
+    public bool on;
+
     public GameObject BuildMode;
     public GameObject BuildCursor;
     public GameObject BuildMenu;
 
     public Button button;
-    public MainButtonsController controller;
 
     void Start()
     {
@@ -20,14 +20,13 @@ public class BuildModeButton : MainButton
     }
 
     // Overrides turnOn and turnOff functions
-    public override void turnOn()
+    public void turnOn()
     {
-        controller.mode = 1;
         setActivity(true);
         on = true;
     }
 
-    public override void turnOff()
+    public void turnOff()
     {
         setActivity(false);
         on = false;
@@ -40,6 +39,7 @@ public class BuildModeButton : MainButton
     }
 
     void onButtonPress() {
-        controller.buttonPressed = 1;
+        if (on) turnOff();
+        else turnOn();
     }
 }

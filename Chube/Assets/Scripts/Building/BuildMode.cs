@@ -24,7 +24,7 @@ public class BuildMode : MonoBehaviour
 
     public Materials materials;
     public BuildButtonsController controller;
-    public MainButtonsController mainButtonController;
+    public BuildModeButton buildMode;
 
     public AudioSource invalidClick;
     public AudioSource build;
@@ -32,7 +32,7 @@ public class BuildMode : MonoBehaviour
 
     void Update()
     {
-        if (mainButtonController.mode == 1)
+        if (buildMode.on)
         {
             // Cursor color is red by default
             cursor.render.color = Color.red;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class TileManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class TileManager : MonoBehaviour
     public int maxHealth;
     public bool isChube;
 
+    public Tile pollutedTile;
     public Tilemap tilemap;
     public TilemapRenderer tRenderer;
     public PrefabBrush prefabBrush;
@@ -38,10 +40,15 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D()
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        health--;
-        //Debug.Log(tilemap.WorldToCell(transform.position) + " health: " + health);
+        if (collision.tag == "Enemy" && !isChube) {
+            tilemap.SetTile(tilemap.WorldToCell(transform.position), pollutedTile);
+        }
+    }
+    void OnTriggerStay2D()
+    {
+        health-= 0.002f;
     }
 
     public void damage(float amount) {
@@ -52,7 +59,6 @@ public class TileManager : MonoBehaviour
 
     private void onChubeDeath() {
         Debug.Log("You died.");
-        Application.Quit();
-        UnityEditor.EditorApplication.isPlaying = false;
+        SceneManager.LoadScene("Menu");
     }
 }

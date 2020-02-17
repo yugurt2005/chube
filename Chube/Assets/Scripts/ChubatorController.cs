@@ -11,7 +11,8 @@ public class ChubatorController : MonoBehaviour
     public Materials materials;
 
     public Vector3Int pos;
-    public GameObject prefabToSpawn;
+    public GameObject troopPrefab;
+    public Troop troopToSpawn;
     public int selfMaterials = 0;
     public float time = 15f;
     public int cost;
@@ -37,6 +38,10 @@ public class ChubatorController : MonoBehaviour
         borderTiles[1] = new Vector3Int(pos.x, pos.y - 1, pos.z);
         borderTiles[2] = new Vector3Int(pos.x + 1, pos.y, pos.z);
         borderTiles[3] = new Vector3Int(pos.x - 1, pos.y, pos.z);
+
+        troopToSpawn = troopPrefab.GetComponent<Troop>();
+        troopToSpawn.tilemap = tilemap;
+        troopToSpawn.tilemapRenderer = tRenderer;
     }
 
     public void Update()
@@ -72,11 +77,10 @@ public class ChubatorController : MonoBehaviour
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    Debug.Log(tilemap.GetTile(borderTiles[i]) == walkable);
                     if (tilemap.GetTile(borderTiles[i]) == walkable)
                     {
                         selfMaterials -= cost;                        
-                        Instantiate(prefabToSpawn, tilemap.GetCellCenterWorld(borderTiles[i]), transform.rotation); //first one is the one to instantiate wolf
+                        Instantiate(troopToSpawn, tilemap.GetCellCenterWorld(borderTiles[i]), transform.rotation);
                         countdown = time;
                         return;
                     }

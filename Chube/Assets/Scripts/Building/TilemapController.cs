@@ -8,6 +8,9 @@ public class TilemapController : MonoBehaviour
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
     public TileBase chubeTile;
+    // used to avoid GameObject.Find command in TileManager script
+
+    public PrefabBrushManager prefabManager;
 
     // Start is called before the first frame update
     void Start()

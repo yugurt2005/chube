@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEditor.Tilemaps;
+using System.Linq;
 
 // NOTE: Before building the game (when we're finished), change the 'individual' rendering mode to 'chunk' and make a sprite atlas instead.
 // This will fix/make more efficient isometric rendering in the final build; this 'individual' rendering mode is just a temporary way to 
@@ -10,14 +11,20 @@ using UnityEditor.Tilemaps;
 
 public class BuildMode : MonoBehaviour
 {
-    public PrefabBrush prefabBrush;
+    
+    public PrefabBrushManager prefabManager;
     public GameObject normal;
     public GameObject chubator;
+    public GameObject collector;
+    public GameObject generator;
 
-    public Tile chube;
+    public Tile chubeTile;
+    public Tile trashCollectorTile;
     public Tile chubatorTile;
     public Tile buildProcessTile;
     public Tile builtTile;
+    public Tile generatorTile;
+
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
     public BuildCursor cursor;
@@ -30,6 +37,16 @@ public class BuildMode : MonoBehaviour
     public AudioSource build;
     public SFXController SFX;
 
+    public Dictionary<Tile, GameObject> tileToObject = new Dictionary<Tile, GameObject>();
+
+    private void Start()
+    {
+        tileToObject.Add(generatorTile, generator);
+        tileToObject.Add(builtTile, normal);
+        tileToObject.Add(buildProcessTile, normal);
+        tileToObject.Add(chubatorTile, chubator);
+        tileToObject.Add(trashCollectorTile, collector);
+    }
     void Update()
     {
         if (buildMode.on)
@@ -38,23 +55,24 @@ public class BuildMode : MonoBehaviour
             cursor.render.color = Color.red;
             Vector3Int cellPosition = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             cellPosition.z = tilemapRenderer.sortingOrder;
+            Tile tile = controller.currentTile;
 
             // If current cell is available, set cursor to green
-            if (checkAvailability(cellPosition))
+            if (checkAvailability(cellPosition) && prefabManager.prefabMap[tileToObject[tile].gameObject.name] < tileToObject[tile].GetComponent<TileManager>().maxAmount)
             {
-                cursor.render.color = Color.green;
+                    cursor.render.color = Color.green;
 
-                // If it's available and the player clicks the mouse, build a floor tile there
-                if (Input.GetButton("Fire1"))
-                {
-                    // create coroutine of building
-                    SFX.playSound(build);
-                    Tile tile = controller.currentTile;
-                    materials.amount -= controller.cost;
-                    tilemap.SetTile(cellPosition, buildProcessTile);
+                    // If it's available and the player clicks the mouse, build a floor tile there
+                    if (Input.GetButton("Fire1"))
+                    {                   
+                            // create coroutine of building
+                            SFX.playSound(build);
+                    
+                            materials.amount -= controller.cost;
 
-                    StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));
-                }
+                            tilemap.SetTile(cellPosition, buildProcessTile);
+                            StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));                    
+                    }
             }
             else if (Input.GetButtonDown("Fire1")) {
                 SFX.playSound(invalidClick);
@@ -83,16 +101,11 @@ public class BuildMode : MonoBehaviour
 
     public IEnumerator buildNewTile(Tile tile, Vector3Int pos, float time)
     {
+        prefabManager.addCount(tileToObject[tile].gameObject);
+
         yield return new WaitForSecondsRealtime(time);
 
-        if (tile == chubatorTile)
-        {
-            prefabBrush.Paint(tilemap, chubator, pos);
-        }
-
-        else {
-            prefabBrush.Paint(tilemap, normal, pos);
-        }
+        prefabManager.paint(tilemap, tileToObject[tile].gameObject, pos);
 
         tilemap.SetTile(pos, tile);
     }

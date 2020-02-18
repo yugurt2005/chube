@@ -10,11 +10,13 @@ public class TileManager : MonoBehaviour
     public float health;
     public int maxHealth;
     public bool isChube;
+    public int maxAmount;
 
     public Tile pollutedTile;
     public Tilemap tilemap;
     public TilemapRenderer tRenderer;
     public PrefabBrush prefabBrush;
+    public PrefabBrushManager manager;
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class TileManager : MonoBehaviour
         GameObject temp = GameObject.FindGameObjectWithTag("Tilemap");
         tilemap = temp.GetComponent<Tilemap>();
         tRenderer = temp.GetComponent<TilemapRenderer>();
+        manager = temp.GetComponent<TilemapController>().prefabManager;
     }
 
     // Update is called once per frame
@@ -29,6 +32,7 @@ public class TileManager : MonoBehaviour
     {
         if (health <= 0) {
             Debug.Log("DESTROYED A STRUCTURE");
+            manager.prefabMap[gameObject.name] -= 1;
             if (isChube) {
                 onChubeDeath();
             }
@@ -42,7 +46,7 @@ public class TileManager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy" && !isChube) {
+        if (collision.tag == "Enemy" && gameObject.tag == "Walkable") {
             tilemap.SetTile(tilemap.WorldToCell(transform.position), pollutedTile);
         }
     }

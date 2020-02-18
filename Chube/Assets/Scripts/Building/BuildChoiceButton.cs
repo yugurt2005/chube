@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BuildChoiceButton : MonoBehaviour
 {
+    public bool buildable = true;
     public Tile tile;
     public int cost;
     public Button button;
@@ -19,8 +20,11 @@ public class BuildChoiceButton : MonoBehaviour
     }
 
     public void switchTile() {
-        controller.currentTile = tile;
-        controller.cost = cost;
-        controller.buildTime = buildTime;
+        if (buildable)
+        {
+            controller.currentTile = tile;
+            controller.cost = cost;
+            controller.buildTime = buildTime;
+        }
     }
 }

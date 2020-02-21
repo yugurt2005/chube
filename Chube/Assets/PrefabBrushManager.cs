@@ -24,4 +24,10 @@ public class PrefabBrushManager : MonoBehaviour
     public void addCount(GameObject prefab) {
         prefabMap[prefab.name] += 1;
     }
+
+    public void subtractCount(string prefabname)
+    {
+        prefabMap[prefabname] -= 1;
+        //Debug.Log("Walkable count: " + prefabMap["Walkable"]);
+    }
 }

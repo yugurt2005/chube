@@ -13,11 +13,13 @@ public class BuildMode : MonoBehaviour
 {
     
     public PrefabBrushManager prefabManager;
+    [Header("Tile Types")]
     public GameObject normal;
     public GameObject chubator;
     public GameObject collector;
     public GameObject generator;
 
+    [Header("Tiles")]
     public Tile chubeTile;
     public Tile trashCollectorTile;
     public Tile chubatorTile;
@@ -25,10 +27,12 @@ public class BuildMode : MonoBehaviour
     public Tile builtTile;
     public Tile generatorTile;
 
+    [Header("Tilemap")]
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
     public BuildCursor cursor;
 
+    [Header("General")]
     public Materials materials;
     public BuildButtonsController controller;
     public BuildModeButton buildMode;
@@ -65,17 +69,20 @@ public class BuildMode : MonoBehaviour
                     // If it's available and the player clicks the mouse, build a floor tile there
                     if (Input.GetButton("Fire1"))
                     {                   
-                            // create coroutine of building
-                            SFX.playSound(build);
+                        // create coroutine of building
+                        SFX.playSound(build);
                     
-                            materials.amount -= controller.cost;
-
-                            tilemap.SetTile(cellPosition, buildProcessTile);
-                            StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));                    
+                        materials.amount -= controller.cost;
+                        //DELETE LATER
+                        //Debug.Log("position of new tile: " + cellPosition + " | dimensions of tilemap: " + tilemap.cellBounds.size);
+                        TilemapController.changeProperties(cellPosition);
+                        tilemap.SetTile(cellPosition, buildProcessTile);
+                        StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));                    
                     }
             }
             else if (Input.GetButtonDown("Fire1")) {
                 SFX.playSound(invalidClick);
+                Debug.Log("Invalid click at x: " + cellPosition.x + " | y: " + cellPosition.y); //DELETE LATER!
             }
         }
     }
@@ -105,8 +112,13 @@ public class BuildMode : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(time);
 
-        prefabManager.paint(tilemap, tileToObject[tile].gameObject, pos);
+        if (tilemap.HasTile(pos))
+        {
+            prefabManager.paint(tilemap, tileToObject[tile].gameObject, pos);
 
-        tilemap.SetTile(pos, tile);
+            tilemap.SetTile(pos, tile);
+        }
+        else
+            prefabManager.subtractCount(tileToObject[tile].gameObject.name);
     }
 }

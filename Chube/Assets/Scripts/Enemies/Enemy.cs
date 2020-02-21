@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
 
                 Debug.DrawRay(transform.position, new Vector3(dir.x, dir.y, 0), Color.yellow);
 
-                if (hit && hit.collider.tag == "Structure")
+                if (hit)// && hit.collider.tag == "Structure") //TODO:CHANGE BACK!!@#!@#!@#!@#
                 {
                     Debug.Log("Raycast hit a structure! Destroying structure...");
                     destroying = true;

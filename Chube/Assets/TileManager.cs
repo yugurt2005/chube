@@ -18,13 +18,18 @@ public class TileManager : MonoBehaviour
     public PrefabBrush prefabBrush;
     public PrefabBrushManager manager;
 
+    private Vector3Int pos;
+
     void Start()
     {
         health = maxHealth;
         GameObject temp = GameObject.FindGameObjectWithTag("Tilemap");
         tilemap = temp.GetComponent<Tilemap>();
         tRenderer = temp.GetComponent<TilemapRenderer>();
-        manager = temp.GetComponent<TilemapController>().prefabManager;
+        manager = temp.GetComponent<TilemapController>().prefabBrushManagerTemp;
+
+        pos = tilemap.WorldToCell(transform.position);
+        pos.z = tRenderer.sortingOrder;
     }
 
     // Update is called once per frame
@@ -32,16 +37,35 @@ public class TileManager : MonoBehaviour
     {
         if (health <= 0) {
             Debug.Log("DESTROYED A STRUCTURE");
-            manager.prefabMap[gameObject.name] -= 1;
+            manager.subtractCount(gameObject.name);
             if (isChube) {
                 onChubeDeath();
             }
-            Vector3Int pos = tilemap.WorldToCell(transform.position);
-            pos.z = tRenderer.sortingOrder;
+            
             tilemap.SetTile(pos, null);
+            //TilemapController.cascade(pos);
+            StartCoroutine(TilemapController.cascade(pos));
             Destroy(gameObject);
             Destroy(this);
         }
+        if (!tilemap.HasTile(pos)) //tile set to null by cascader
+        {
+            cascadeDestroy();
+        }
+    }
+
+    public void cascadeDestroy() //called by cascader
+    {
+        manager.subtractCount(gameObject.name);
+        if (isChube)
+        {
+            onChubeDeath();
+        }
+        Vector3Int pos = tilemap.WorldToCell(transform.position);
+        pos.z = tRenderer.sortingOrder;
+        tilemap.SetTile(pos, null);
+        Destroy(gameObject);
+        Destroy(this);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

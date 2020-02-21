@@ -2863,10 +2863,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c3f44edb561c974d92bd2e3d7e46bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 1015716841}
-  tilemapRenderer: {fileID: 1015716840}
-  chubeTile: {fileID: 11400000, guid: 878b155406d28514eb8965ea2fc16c54, type: 2}
-  prefabManager: {fileID: 7140565}
+  tilemapTemp: {fileID: 1015716841}
+  tilemapRendererTemp: {fileID: 1015716840}
+  chubeTileTemp: {fileID: 11400000, guid: 878b155406d28514eb8965ea2fc16c54, type: 2}
+  prefabBrushManagerTemp: {fileID: 7140565}
 --- !u!1 &1029900041
 GameObject:
   m_ObjectHideFlags: 0

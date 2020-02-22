@@ -17,6 +17,7 @@ public class TileManager : MonoBehaviour
     public TilemapRenderer tRenderer;
     public PrefabBrush prefabBrush;
     public PrefabBrushManager manager;
+    public TilemapController tilemapController;
 
     private Vector3Int pos;
 
@@ -27,6 +28,7 @@ public class TileManager : MonoBehaviour
         tilemap = temp.GetComponent<Tilemap>();
         tRenderer = temp.GetComponent<TilemapRenderer>();
         manager = temp.GetComponent<TilemapController>().prefabBrushManagerTemp;
+        tilemapController = temp.GetComponent<TilemapController>();
 
         pos = tilemap.WorldToCell(transform.position);
         pos.z = tRenderer.sortingOrder;
@@ -43,8 +45,7 @@ public class TileManager : MonoBehaviour
             }
             
             tilemap.SetTile(pos, null);
-            //TilemapController.cascade(pos);
-            StartCoroutine(TilemapController.cascade(pos));
+            tilemapController.coroutine(pos);
             Destroy(gameObject);
             Destroy(this);
         }
@@ -61,8 +62,6 @@ public class TileManager : MonoBehaviour
         {
             onChubeDeath();
         }
-        Vector3Int pos = tilemap.WorldToCell(transform.position);
-        pos.z = tRenderer.sortingOrder;
         tilemap.SetTile(pos, null);
         Destroy(gameObject);
         Destroy(this);

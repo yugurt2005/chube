@@ -4296,10 +4296,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabEnemy: {fileID: 2236184215061020381, guid: ab1348220245247c69967e26fda9eda4,
     type: 3}
+  prefabArcherEnemy: {fileID: 2236184215061020381, guid: c53ac504e731349479448175759675d6,
+    type: 3}
   spawnSpeed: 25
   tilemap: {fileID: 1015716841}
   tilemapRenderer: {fileID: 1015716840}
   edgeSpawner: {fileID: 1710275997}
+  enemyTypeProbability: 0
 --- !u!4 &1507520357
 Transform:
   m_ObjectHideFlags: 0

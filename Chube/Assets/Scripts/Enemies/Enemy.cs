@@ -87,7 +87,6 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
                     structure = hit.collider.GetComponent<TileManager>();
                     break;
                 }
-                
             }
         }
         else {
@@ -96,10 +95,14 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
     }
 
     void attack() {
-        structure.damage(structDamage);
-        if (structure.health <= 0) {
-            this.gameObject.SetActive(false);
-            //StartCoroutine(movementController.Move(transform, transform.position, chubePos));
+        if (structure != null)
+        {
+            structure.damage(structDamage);
+            if (structure.health <= 0)
+            {
+                this.gameObject.SetActive(false);
+                //StartCoroutine(movementController.Move(transform, transform.position, chubePos));
+            }
         }
     }
 }

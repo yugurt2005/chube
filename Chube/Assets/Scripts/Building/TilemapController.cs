@@ -12,7 +12,7 @@ public class TilemapController : MonoBehaviour
     public TileBase chubeTileTemp;
     private static TileBase chubeTile;
     // used to avoid GameObject.Find command in TileManager script
-    public static float cascadeTime = 1f;
+    public static float cascadeTime = 0.1f;
 
     public PrefabBrushManager prefabBrushManagerTemp;
     private static PrefabBrushManager prefabBrushManager;
@@ -191,15 +191,20 @@ public class TilemapController : MonoBehaviour
                     finish = false;
                 Point cur = l[0];
                 l.RemoveAt(0);
-                yield return new WaitForSecondsRealtime(cascadeTime); //TODO: make waiting work
+                yield return new WaitForSeconds(cascadeTime); //TODO: make waiting work
                 tilemap.SetTile(new Vector3Int(cur.x, cur.y, tilemapRenderer.sortingOrder), null);
-                //note that tilemanager will check if the tile is null and then delete itself
+                //note that tileManager/buildMode will check if the tile is null and then delete itself
             }
             if (finish)
                 break;
         }
 
         Debug.Log("Finished cascade.");
+    }
+
+    public void coroutine(Vector3Int pos)
+    {
+        StartCoroutine(cascade(pos));
     }
     //---------------------------------------cascade------------------------------------------
 

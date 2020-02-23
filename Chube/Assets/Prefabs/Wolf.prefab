@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1344853874796227963}
   - component: {fileID: 2609285562652418503}
   - component: {fileID: 6623747314582235536}
+  - component: {fileID: -1477073989669931998}
   m_Layer: 10
   m_Name: Wolf
   m_TagString: Troop
@@ -125,3 +126,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
+--- !u!114 &-1477073989669931998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344853874796227960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a532813e8dbf740bdee00024c2fc94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  perceptionRadius: 3
+  attackRadius: 1

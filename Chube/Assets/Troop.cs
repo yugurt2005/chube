@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine;
 using UnityEditor.Tilemaps;
 
-public class Troop : MonoBehaviour //TODO: inherit from pathfinder
+public class Troop : MonoBehaviour, IDamage //TODO: inherit from pathfinder
 {
     private SpriteRenderer spriteRenderer;
     public Controller movementController;
@@ -29,6 +29,8 @@ public class Troop : MonoBehaviour //TODO: inherit from pathfinder
     public void takeDamage(float damage)
     {
         health -= damage;
+        if (health <= 0)
+            Destroy(gameObject);
     }
 
     void Update()

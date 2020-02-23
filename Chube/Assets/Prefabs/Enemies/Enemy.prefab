@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 9157602697490805885}
   - component: {fileID: -8378257719831042698}
   - component: {fileID: -8872038754596513642}
+  - component: {fileID: 1932616024818596956}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -563,6 +564,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
+<<<<<<< Updated upstream
 --- !u!1 &2462684417654476039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,11 +1499,15 @@ MonoBehaviour:
   Offset: {x: -0.1, y: -0.1, z: 0}
   Material: {fileID: 2100000, guid: 298ba3d740859074999c04454115d1dc, type: 2}
 --- !u!114 &1689591712660340834
+=======
+--- !u!114 &1932616024818596956
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 6143300171704061613}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2482,3 +2488,14 @@ Transform:
   m_Father: {fileID: 2236184215061020371}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+  m_GameObject: {fileID: 2236184215061020381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a532813e8dbf740bdee00024c2fc94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  perceptionRadius: 5
+  attackRadius: 3
+>>>>>>> Stashed changes

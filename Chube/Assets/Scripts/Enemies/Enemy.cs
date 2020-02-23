@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine;
 using UnityEditor.Tilemaps;
 
-public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
+public class Enemy : MonoBehaviour, IDamage //TODO: inherit from pathfinder
 {
     /*
      * different enemies do different things.
@@ -42,6 +42,8 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
     public void takeDamage(float damage)
     {
         health -= damage;
+        if (health <= 0)
+            Destroy(gameObject);
     }
     
     void Update()
@@ -50,7 +52,7 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
         pos.z = tilemapRenderer.sortingOrder;
 
         //TODO: find enemy in attack range and fire. -NOTE: ENEMY CAN'T MOVE WHILE SHOOTING.
-
+        
         if (shipMode)
         {
             Vector3Int tilemappos = tilemap.WorldToCell(transform.position);

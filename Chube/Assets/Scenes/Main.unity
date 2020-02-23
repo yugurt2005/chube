@@ -4364,7 +4364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011a0897dff2949b5a435a8698e1ab23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabEnemy: {fileID: 2236184215061020381, guid: ab1348220245247c69967e26fda9eda4,
+  prefabEnemy: {fileID: 2236184215061020381, guid: 58785529d74c58b4981123ae8e69ed0f,
     type: 3}
   prefabArcherEnemy: {fileID: 2236184215061020381, guid: c53ac504e731349479448175759675d6,
     type: 3}

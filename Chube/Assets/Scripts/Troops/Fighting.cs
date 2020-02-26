@@ -28,7 +28,7 @@ public class Fighting : MonoBehaviour
         GameObject character;
         if (!fighting && Raycast(out character))
         {
-            Debug.Log(character.tag);
+            //Debug.Log(character.tag);
             position = transform.position;
             StopAllCoroutines();
             StartCoroutine(Fight(character));

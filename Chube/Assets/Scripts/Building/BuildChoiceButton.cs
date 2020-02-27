@@ -8,7 +8,7 @@ public class BuildChoiceButton : MonoBehaviour
 {
     public bool buildable = true;
     public Tile tile;
-    public int cost;
+    public int cost; //set in inspector
     public Button button;
     public float buildTime;
 
@@ -17,6 +17,7 @@ public class BuildChoiceButton : MonoBehaviour
     public void Start()
     {
         button.onClick.AddListener(switchTile);
+        BuildButtonsController.costs.Add(tile.name, cost);
     }
 
     public void switchTile() {

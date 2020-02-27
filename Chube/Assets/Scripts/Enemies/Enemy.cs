@@ -48,15 +48,18 @@ public class Enemy : MonoBehaviour, IDamage //TODO: inherit from pathfinder
     
     void Update()
     {
-        Vector3 pos = transform.position;
-        pos.z = tilemapRenderer.sortingOrder;
+        Vector3Int tilemappos = tilemap.WorldToCell(transform.position);
+        tilemappos.z = tilemapRenderer.sortingOrder;
 
         //TODO: find enemy in attack range and fire. -NOTE: ENEMY CAN'T MOVE WHILE SHOOTING.
-        
+
+        if (!tilemap.HasTile(tilemappos))
+        {
+            StopAllCoroutines(); //stop pathfinding
+            shipMode = true;
+        }
         if (shipMode)
         {
-            Vector3Int tilemappos = tilemap.WorldToCell(transform.position);
-            tilemappos.z = tilemapRenderer.sortingOrder;
             transform.position = Vector3.MoveTowards(transform.position, tilemap.GetCellCenterWorld(chubePos), shipSpeed * Time.deltaTime);
 
             if (tilemap.HasTile(tilemappos))

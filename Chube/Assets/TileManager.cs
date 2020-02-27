@@ -12,6 +12,7 @@ public class TileManager : MonoBehaviour
     public bool isChube;
     public int maxAmount;
 
+    public static float enemyDamage = 0.003f;
     public Tile pollutedTile;
     public Tilemap tilemap;
     public TilemapRenderer tRenderer;
@@ -20,6 +21,8 @@ public class TileManager : MonoBehaviour
     public TilemapController tilemapController;
 
     private Vector3Int pos;
+
+    private bool isPolluted = false;
 
     void Start()
     {
@@ -49,10 +52,12 @@ public class TileManager : MonoBehaviour
             Destroy(gameObject);
             Destroy(this);
         }
-        if (!tilemap.HasTile(pos)) //tile set to null by cascader
+        else if (!tilemap.HasTile(pos)) //tile set to null by cascader
         {
             cascadeDestroy();
         }
+        if (isPolluted)
+            health -= enemyDamage;
     }
 
     public void cascadeDestroy() //called by cascader
@@ -71,11 +76,12 @@ public class TileManager : MonoBehaviour
     {
         if (collision.tag == "Enemy" && gameObject.tag == "Walkable") {
             tilemap.SetTile(tilemap.WorldToCell(transform.position), pollutedTile);
+            isPolluted = true;
         }
     }
     void OnTriggerStay2D()
     {
-        health-= 0.002f;
+        health -= enemyDamage * Time.deltaTime;
     }
 
     public void damage(float amount) {

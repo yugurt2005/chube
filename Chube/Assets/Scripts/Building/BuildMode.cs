@@ -24,6 +24,7 @@ public class BuildMode : MonoBehaviour
     public Tile trashCollectorTile;
     public Tile chubatorTile;
     public Tile buildProcessTile;
+    public Tile pollutedTile;
     public Tile builtTile;
     public Tile generatorTile;
 
@@ -42,7 +43,9 @@ public class BuildMode : MonoBehaviour
     public SFXController SFX;
 
     public Dictionary<Tile, GameObject> tileToObject = new Dictionary<Tile, GameObject>();
-
+    private float cellBreakingCooldown = 1f;
+    private List<Vector3Int> keys = new List<Vector3Int>();
+    private List<float> cooldowns = new List<float>();
     private void Start()
     {
         tileToObject.Add(generatorTile, generator);
@@ -60,30 +63,52 @@ public class BuildMode : MonoBehaviour
             Vector3Int cellPosition = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             cellPosition.z = tilemapRenderer.sortingOrder;
             Tile tile = controller.currentTile;
-
             // If current cell is available, set cursor to green
-            if (checkAvailability(cellPosition) && prefabManager.prefabMap[tileToObject[tile].gameObject.name] < tileToObject[tile].GetComponent<TileManager>().maxAmount)
+            if (checkAvailability(cellPosition) && prefabManager.prefabMap[tileToObject[tile].gameObject.name] < tileToObject[tile].GetComponent<TileManager>().maxAmount && !keys.Contains(cellPosition))
             {
-                    cursor.render.color = Color.green;
+                cursor.render.color = Color.green;
 
-                    // If it's available and the player clicks the mouse, build a floor tile there
-                    if (Input.GetButton("Fire1"))
-                    {                   
-                        // create coroutine of building
-                        SFX.playSound(build);
-                    
-                        materials.amount -= controller.cost;
-                        //DELETE LATER
-                        //Debug.Log("position of new tile: " + cellPosition + " | dimensions of tilemap: " + tilemap.cellBounds.size);
-                        TilemapController.changeProperties(cellPosition);
-                        tilemap.SetTile(cellPosition, buildProcessTile);
-                        StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));                    
-                    }
+                // If it's available and the player clicks the mouse, build a floor tile there
+                if (Input.GetButton("Fire1"))
+                {
+                    // create coroutine of building
+                    SFX.playSound(build);
+
+                    materials.amount -= controller.cost;
+                    //DELETE LATER
+                    //Debug.Log("position of new tile: " + cellPosition + " | dimensions of tilemap: " + tilemap.cellBounds.size);
+                    TilemapController.changeProperties(cellPosition);
+                    tilemap.SetTile(cellPosition, buildProcessTile);
+                    StartCoroutine(buildNewTile(tile, cellPosition, controller.buildTime));
+                }
             }
-            else if (Input.GetButtonDown("Fire1")) {
+            else if (Input.GetMouseButtonDown(0))
+            {
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) //destroy tile
+                {
+                    string tilename = tilemap.GetTile(cellPosition).name;
+                    if (tilename.Equals(buildProcessTile.name) || tilename.Equals(pollutedTile.name))
+                        tilename = builtTile.name;
+                    materials.amount += (int)(BuildButtonsController.costs[tilename] / 2); //only get half value back
+                    tilemap.SetTile(cellPosition, null);
+                    StartCoroutine(TilemapController.cascade(cellPosition));
+                    keys.Add(cellPosition);
+                    cooldowns.Add(cellBreakingCooldown);
+                }
+
                 SFX.playSound(invalidClick);
-                Debug.Log("Invalid click at x: " + cellPosition.x + " | y: " + cellPosition.y); //DELETE LATER!
             }
+        }
+
+        for (int i = 0; i < keys.Count; i ++)
+        {
+            if (cooldowns[i] <= 0)
+            {
+                cooldowns.RemoveAt(i);
+                keys.RemoveAt(i);
+                break;
+            }
+            cooldowns[i] -= Time.deltaTime;
         }
     }
 
@@ -119,6 +144,8 @@ public class BuildMode : MonoBehaviour
             tilemap.SetTile(pos, tile);
         }
         else
+        {
             prefabManager.subtractCount(tileToObject[tile].gameObject.name);
+        }
     }
 }

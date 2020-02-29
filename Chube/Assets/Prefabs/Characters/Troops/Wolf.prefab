@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2609285562652418503}
   - component: {fileID: 6623747314582235536}
   - component: {fileID: -1477073989669931998}
+  - component: {fileID: -3121195460656192589}
   m_Layer: 10
   m_Name: Wolf
   m_TagString: Troop
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementController: {fileID: 0}
   chosen: 0
-  health: 10
+  health: 100
   tilemap: {fileID: 0}
   tilemapRenderer: {fileID: 0}
   walkableTiles:
@@ -143,5 +144,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  speed: 2.28
   perceptionRadius: 3
   attackRadius: 1
+--- !u!114 &-3121195460656192589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344853874796227960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad103f4b53e56b4ebea9fd0c083d70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100

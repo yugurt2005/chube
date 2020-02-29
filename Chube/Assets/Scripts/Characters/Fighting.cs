@@ -1,15 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Fighting : MonoBehaviour
 {
     public float damage;
-    IDamage opponent;
     bool fighting;
     int layer;
 
-    float speed;
+    public float speed;
     Vector3 position;
 
     public float perceptionRadius;
@@ -39,10 +39,10 @@ public class Fighting : MonoBehaviour
     {
         fighting = true;
 
-        if (character.tag == "Troop")
-            opponent = character.GetComponent<Troop>();
-        if (character.tag == "Enemy")
-            opponent = character.GetComponent<Enemy>();
+        Health opponent = character.GetComponent<Health>();
+
+        if (gameObject.tag == "Troop")
+            Debug.Log(opponent.health);
 
         while (true)
         {
@@ -52,15 +52,19 @@ public class Fighting : MonoBehaviour
 
                 float distance = Vector3.Distance(transform.position, character.transform.position);
                 if (distance <= attackRadius)
-                    opponent.takeDamage(damage * Time.deltaTime);
+                    opponent.TakeDamage(damage * Time.deltaTime);
                 if (distance <= perceptionRadius)
                     transform.position = Vector3.MoveTowards(transform.position, character.transform.position, speed * Time.deltaTime);
                 else
                     break;
-
+                if (gameObject.tag == "Troop")
+                    Debug.Log(opponent.health);
                 position = transform.position;
             }
-            catch { break; }
+            catch (Exception error)
+            {
+                Debug.LogError(error);
+            }
 
             yield return null;
         }

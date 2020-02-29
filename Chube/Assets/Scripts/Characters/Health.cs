@@ -6,12 +6,13 @@ public class Health : MonoBehaviour
 {
     public float health = 100f;
 
-    public void CheckForDeath()
+    public void takeDamage(float damage)
     {
-        if (health <= 0)
-        {
+        health -= damage;
+        Debug.Log(health);
+        if (health <= 0) { 
             Debug.Log(gameObject.tag);
-            Destroy(gameObject);   
+            Destroy(gameObject);
         }
     }
 }

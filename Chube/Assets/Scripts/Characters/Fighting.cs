@@ -5,13 +5,10 @@ using UnityEngine;
 public class Fighting : MonoBehaviour
 {
     public float damage;
-    IDamage opponent;
     bool fighting;
     int layer;
 
-    float speed;
-    Vector3 position;
-
+    public float speed;
     public float perceptionRadius;
     public float attackRadius;
 
@@ -28,8 +25,8 @@ public class Fighting : MonoBehaviour
         GameObject character;
         if (!fighting && Raycast(out character))
         {
-            //Debug.Log(character.tag);
-            position = transform.position;
+            fighting = true;
+            Debug.Log(character.tag);
             StopAllCoroutines();
             StartCoroutine(Fight(character));
         }
@@ -37,28 +34,20 @@ public class Fighting : MonoBehaviour
 
     IEnumerator Fight(GameObject character)
     {
-        fighting = true;
-
-        if (character.tag == "Troop")
-            opponent = character.GetComponent<Troop>();
-        if (character.tag == "Enemy")
-            opponent = character.GetComponent<Enemy>();
+        Debug.Log("hi");
+        Health health = character.GetComponent<Health>();
 
         while (true)
         {
             try
             {
-                transform.position = position;
-
                 float distance = Vector3.Distance(transform.position, character.transform.position);
                 if (distance <= attackRadius)
-                    opponent.takeDamage(damage * Time.deltaTime);
+                    health.takeDamage(damage * Time.deltaTime);
                 if (distance <= perceptionRadius)
                     transform.position = Vector3.MoveTowards(transform.position, character.transform.position, speed * Time.deltaTime);
                 else
                     break;
-
-                position = transform.position;
             }
             catch { break; }
 

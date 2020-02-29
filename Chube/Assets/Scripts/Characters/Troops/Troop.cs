@@ -4,13 +4,11 @@ using UnityEngine.Tilemaps;
 using UnityEngine;
 using UnityEditor.Tilemaps;
 
-public class Troop : MonoBehaviour, IDamage //TODO: inherit from pathfinder
+public class Troop : MonoBehaviour //TODO: inherit from pathfinder
 {
     private SpriteRenderer spriteRenderer;
     public Controller movementController;
     public bool chosen;
-
-    public float health = 10f;
 
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
@@ -34,12 +32,6 @@ public class Troop : MonoBehaviour, IDamage //TODO: inherit from pathfinder
     }
 
     // Because you need the references because they're instantiated so you can't set the references in the editor
-    public void takeDamage(float damage)
-    {
-        health -= damage;
-        if (health <= 0)
-            Destroy(gameObject);
-    }
 
     private bool SetTileColor(int x, int y, Color color, bool ismove)
     {
@@ -94,6 +86,8 @@ public class Troop : MonoBehaviour, IDamage //TODO: inherit from pathfinder
         }
 
         //highlight attack tile
+        // NOTE: commented out for testing stuff
+        /*
         SetTileColor(pos.x - 1, pos.y - 1, Color.red, false);
         SetTileColor(pos.x, pos.y - 1, Color.magenta, true);
         SetTileColor(pos.x + 1, pos.y - 1, Color.red, false);
@@ -104,6 +98,7 @@ public class Troop : MonoBehaviour, IDamage //TODO: inherit from pathfinder
         SetTileColor(pos.x - 1, pos.y + 1, Color.red, false);
         SetTileColor(pos.x, pos.y + 1, Color.magenta, true);
         SetTileColor(pos.x + 1, pos.y + 1, Color.red, false);
+        */
     }
 
     private bool isValidMoveSpot(Vector3Int movePos)

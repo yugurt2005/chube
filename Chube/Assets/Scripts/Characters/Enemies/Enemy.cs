@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine;
 using UnityEditor.Tilemaps;
 
-public class Enemy : MonoBehaviour, IDamage //TODO: inherit from pathfinder
+public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
 {
     /*
      * different enemies do different things.

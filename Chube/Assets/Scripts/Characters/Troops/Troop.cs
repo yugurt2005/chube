@@ -128,7 +128,10 @@ public class Troop : MonoBehaviour, IDamage //TODO: inherit from pathfinder
         {
             Debug.Log(this.name + " should be moving to " + mouseTile);
             StopAllCoroutines();
-            StartCoroutine(movementController.Move(transform, transform.position, tilemap.CellToWorld(mouseTile)));
+            if (tilemap.GetTile(selfpos).name == "PortalTile")
+                StartCoroutine(movementController.Move(transform, transform.position, tilemap.CellToWorld(mouseTile), true, true));
+            else
+                StartCoroutine(movementController.Move(transform, transform.position, tilemap.CellToWorld(mouseTile), false, true));
         }
 
         // If place is valid thru specific troop's range

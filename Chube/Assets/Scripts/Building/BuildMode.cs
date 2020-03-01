@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEditor.Tilemaps;
-using System.Linq;
 
 // NOTE: Before building the game (when we're finished), change the 'individual' rendering mode to 'chunk' and make a sprite atlas instead.
 // This will fix/make more efficient isometric rendering in the final build; this 'individual' rendering mode is just a temporary way to 
@@ -18,6 +16,7 @@ public class BuildMode : MonoBehaviour
     public GameObject chubator;
     public GameObject collector;
     public GameObject generator;
+    public GameObject portal;
 
     [Header("Tiles")]
     public Tile chubeTile;
@@ -27,6 +26,8 @@ public class BuildMode : MonoBehaviour
     public Tile pollutedTile;
     public Tile builtTile;
     public Tile generatorTile;
+    public Tile WolfChubatorHighlighted;
+    public Tile portalTile;
 
     [Header("Tilemap")]
     public Tilemap tilemap;
@@ -53,6 +54,7 @@ public class BuildMode : MonoBehaviour
         tileToObject.Add(buildProcessTile, normal);
         tileToObject.Add(chubatorTile, chubator);
         tileToObject.Add(trashCollectorTile, collector);
+        tileToObject.Add(portalTile, portal);
     }
     void Update()
     {
@@ -75,7 +77,7 @@ public class BuildMode : MonoBehaviour
                     SFX.playSound(build);
 
                     materials.amount -= controller.cost;
-                    //DELETE LATER
+                    //DELETE LATER7
                     //Debug.Log("position of new tile: " + cellPosition + " | dimensions of tilemap: " + tilemap.cellBounds.size);
                     TilemapController.changeProperties(cellPosition);
                     tilemap.SetTile(cellPosition, buildProcessTile);
@@ -84,16 +86,28 @@ public class BuildMode : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) //destroy tile
+                if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && tilemap.HasTile(cellPosition)) //destroy tile
                 {
                     string tilename = tilemap.GetTile(cellPosition).name;
-                    if (tilename.Equals(buildProcessTile.name) || tilename.Equals(pollutedTile.name))
-                        tilename = builtTile.name;
-                    materials.amount += (int)(BuildButtonsController.costs[tilename] / 2); //only get half value back
-                    tilemap.SetTile(cellPosition, null);
-                    StartCoroutine(TilemapController.cascade(cellPosition));
-                    keys.Add(cellPosition);
-                    cooldowns.Add(cellBreakingCooldown);
+                    if (tilename.Equals(chubeTile.name))
+                        Debug.Log("Don't vape, don't suicide.");
+                    else
+                    {
+                        if (tilename.Equals(buildProcessTile.name) || tilename.Equals(pollutedTile.name))
+                            tilename = builtTile.name;
+                        if (tilename.Equals(WolfChubatorHighlighted.name))
+                            tilename = chubatorTile.name;
+                        materials.amount += (int)(BuildButtonsController.costs[tilename] / 2); //only get half value back
+                        tilemap.SetTile(cellPosition, null);
+                        StartCoroutine(TilemapController.cascade(cellPosition));
+                        if (tilename.Equals(portalTile.name))
+                        {
+                            materials.amount += (int)(BuildButtonsController.costs[tilename] / 2);
+                            PortalController.destroyPairedPortals(cellPosition);
+                        }
+                        keys.Add(cellPosition);
+                        cooldowns.Add(cellBreakingCooldown);
+                    }
                 }
 
                 SFX.playSound(invalidClick);

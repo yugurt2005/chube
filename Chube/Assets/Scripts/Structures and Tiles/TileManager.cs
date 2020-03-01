@@ -46,8 +46,14 @@ public class TileManager : MonoBehaviour
             if (isChube) {
                 onChubeDeath();
             }
-            
-            tilemap.SetTile(pos, null);
+
+            if (gameObject.name == "Portal")
+            {
+                PortalController.destroyPairedPortals(pos);
+                PortalController.subtractProperties(pos);
+            }
+            else
+                tilemap.SetTile(pos, null);
             tilemapController.coroutine(pos);
             Destroy(gameObject);
             Destroy(this);
@@ -57,7 +63,7 @@ public class TileManager : MonoBehaviour
             cascadeDestroy();
         }
         if (isPolluted)
-            health -= enemyDamage;
+            health -= enemyDamage * Time.deltaTime;
     }
 
     public void cascadeDestroy() //called by cascader
@@ -67,7 +73,13 @@ public class TileManager : MonoBehaviour
         {
             onChubeDeath();
         }
-        tilemap.SetTile(pos, null);
+        if (gameObject.name == "Portal")
+        {
+            PortalController.destroyPairedPortals(pos);
+            PortalController.subtractProperties(pos);
+        }
+        else
+            tilemap.SetTile(pos, null);
         Destroy(gameObject);
         Destroy(this);
     }
@@ -75,7 +87,7 @@ public class TileManager : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Enemy" && gameObject.tag == "Walkable") {
-            tilemap.SetTile(tilemap.WorldToCell(transform.position), pollutedTile);
+            tilemap.SetTile(pos, pollutedTile);
             isPolluted = true;
         }
     }

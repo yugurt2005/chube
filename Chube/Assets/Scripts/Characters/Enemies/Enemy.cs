@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour, IDamage //TODO: inherit from pathfinder
                 shipMode = false;
 
                 StopAllCoroutines();
-                StartCoroutine(movementController.Move(transform, transform.position, tilemap.GetCellCenterWorld(chubePos)));
+                StartCoroutine(movementController.Move(transform, transform.position, tilemap.GetCellCenterWorld(chubePos), false, false));
             }            
         }
         else if (!destroying)

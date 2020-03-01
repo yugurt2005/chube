@@ -16,7 +16,7 @@ public class TilemapController : MonoBehaviour
 
     public PrefabBrushManager prefabBrushManagerTemp;
     private static PrefabBrushManager prefabBrushManager;
-
+    
     [Header("Static Tilemap Properties")] //used for cascading effect
     public static int tilemapsizex = 0;
     public static int tilemapsizey = 0; //in number of cells

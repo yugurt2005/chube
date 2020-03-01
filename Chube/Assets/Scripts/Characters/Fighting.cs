@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class Fighting : MonoBehaviour
     int layer;
 
     public float speed;
+    Vector3 position;
+
     public float perceptionRadius;
     public float attackRadius;
 
@@ -37,19 +40,30 @@ public class Fighting : MonoBehaviour
         Debug.Log("hi");
         Health health = character.GetComponent<Health>();
 
+        Health opponent = character.GetComponent<Health>();
+
+        if (gameObject.tag == "Troop")
+            Debug.Log(opponent.health);
+
         while (true)
         {
             try
             {
                 float distance = Vector3.Distance(transform.position, character.transform.position);
                 if (distance <= attackRadius)
-                    health.takeDamage(damage * Time.deltaTime);
+                    opponent.TakeDamage(damage * Time.deltaTime);
                 if (distance <= perceptionRadius)
                     transform.position = Vector3.MoveTowards(transform.position, character.transform.position, speed * Time.deltaTime);
                 else
                     break;
+                if (gameObject.tag == "Troop")
+                    Debug.Log(opponent.health);
+                position = transform.position;
             }
-            catch { break; }
+            catch (Exception error)
+            {
+                Debug.LogError(error);
+            }
 
             yield return null;
         }

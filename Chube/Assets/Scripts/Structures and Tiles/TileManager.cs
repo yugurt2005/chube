@@ -43,7 +43,6 @@ public class TileManager : MonoBehaviour
     void Update()
     {
         if (health <= 0) {
-            Debug.Log("DESTROYED A STRUCTURE");
             manager.subtractCount(gameObject.name);
             if (isChube) {
                 onChubeDeath();
@@ -112,7 +111,6 @@ public class TileManager : MonoBehaviour
 
 
     private void onChubeDeath() {
-        Debug.Log("You died.");
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Death");
     }
 }

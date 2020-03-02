@@ -60,7 +60,6 @@ public class ChubatorController : MonoBehaviour
                 tilemap.SetTile(pos, validTile);
                 if (Input.GetButtonDown("Fire1"))
                 {
-                    Debug.Log("Fed chubator");
                     selfMaterials += cost;
                     materials.amount -= cost;
                     chubating = true;

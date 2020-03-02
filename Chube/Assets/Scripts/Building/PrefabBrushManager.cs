@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR 
 using UnityEditor.Tilemaps;
+#endif
 using UnityEngine.Tilemaps;
 
 public class PrefabBrushManager : MonoBehaviour
 {
+    
     public Dictionary<string, int> prefabMap = new Dictionary<string, int>();
-    public PrefabBrush prefabBrush;
+    public UnityEditor.Tilemaps.PrefabBrush prefabBrush;
     private string[] prefabs = new string[]{"Chube", "Chubator", "Trash Collector", "Walkable", "Energy Generator", "Portal"};
 
     void Start()

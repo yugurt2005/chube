@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Fighting : MonoBehaviour
 {
@@ -15,12 +16,21 @@ public class Fighting : MonoBehaviour
     public float perceptionRadius;
     public float attackRadius;
 
+    private bool returning;
+    private Tilemap tilemap;
+
     void Start()
     {
         if (gameObject.tag == "Troop")
+        {
+            tilemap = GetComponent<Troop>().tilemap;
             layer = LayerMask.GetMask("Enemies");
-        if (gameObject.tag == "Enemy")
+        }
+        else if (gameObject.tag == "Enemy")
+        {
+            tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
             layer = LayerMask.GetMask("Troops");
+        }
     }
 
     void Update()
@@ -42,6 +52,7 @@ public class Fighting : MonoBehaviour
         {
             try
             {
+                if (!tilemap.HasTile(tilemap.WorldToCell(transform.position))) break;
                 float distance = Vector3.Distance(transform.position, character.transform.position);
                 if (distance <= attackRadius)
                     opponent.TakeDamage(damage * Time.deltaTime);

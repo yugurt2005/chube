@@ -16,7 +16,7 @@ public class TilemapController : MonoBehaviour
 
     public PrefabBrushManager prefabBrushManagerTemp;
     private static PrefabBrushManager prefabBrushManager;
-    
+
     [Header("Static Tilemap Properties")] //used for cascading effect
     public static int tilemapsizex = 0;
     public static int tilemapsizey = 0; //in number of cells
@@ -152,6 +152,7 @@ public class TilemapController : MonoBehaviour
         }
 
         //main expansion/finding loop
+        List<int> stop = new List<int>();
         while (true)
         {
             bool finish = true;
@@ -175,18 +176,27 @@ public class TilemapController : MonoBehaviour
                     {
                         queues[i].Clear();
                         finals[i].Clear();
+                        if (!stop.Contains(i))
+                            stop.Add(i);
                     }
                 }
             }
             if (finish)
                 break;
         }
-        Debug.Log("Cascade: Destroying tiles");
         //destroy each final one by one in cascading effect
+        List<List<Point>> actualfinals = new List<List<Point>>();
+        int finalsidx = 0;
+        foreach (List<Point> l in finals)
+        {
+            if (stop.Contains(finalsidx++))
+                continue;
+            actualfinals.Add(l);
+        }
         while (true)
         {
             bool finish = true;
-            foreach (List<Point> l in finals)
+            foreach (List<Point> l in actualfinals)
             {
                 if (l.Count == 0)
                     continue;
@@ -211,7 +221,7 @@ public class TilemapController : MonoBehaviour
         StartCoroutine(cascade(pos));
     }
     //---------------------------------------cascade------------------------------------------
-    
+
 
     public static void changeProperties(Vector3Int pos) //changes the static properties of this class
     {// important note: PROPERTIES DON'T CHANGE WHEN TILE IS BROKEN (VERY INEFFICIENT)

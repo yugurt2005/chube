@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using UnityEngine;
+#if UNITY_EDITOR 
 using UnityEditor.Tilemaps;
+#endif
 
 public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
 {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using UnityEngine;
-using UnityEditor.Tilemaps;
 
 public class Troop : MonoBehaviour //TODO: inherit from pathfinder
 {
@@ -121,7 +120,8 @@ public class Troop : MonoBehaviour //TODO: inherit from pathfinder
         selfpos.z = tilemapRenderer.sortingOrder;
         Vector3Int mouseTile = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         mouseTile.z = tilemapRenderer.sortingOrder;
-
+        
+        if (!tilemap.HasTile(selfpos)) Destroy(gameObject);
         if (Input.GetButtonDown("Fire1") && tilemap.HasTile(mouseTile) && chosen && isValidMoveSpot(mouseTile))
         {
             Debug.Log(this.name + " should be moving to " + mouseTile);

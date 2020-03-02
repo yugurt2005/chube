@@ -23,6 +23,8 @@ public class TilemapController : MonoBehaviour
     public static int tilemapoffsetx = 0; //offset because some cell positions are negative
     public static int tilemapoffsety = 1; //because chube position is (0, -1, sortingorder)
 
+    public static bool inCascade = false;
+
     private void Awake()
     {
         tilemap = tilemapTemp;
@@ -83,7 +85,7 @@ public class TilemapController : MonoBehaviour
         return ret;
     }
 
-    private static int addQueue(List<List<Point>> queues, List<List<Point>> finals, int queueID, int x, int y, bool[, ,] b, int sections)
+    private static int addQueue(List<List<Point>> queues, List<List<Point>> finals, int queueID, int x, int y, bool[,,] b, int sections)
     { //queues/finals are lists which are reference types - they will be modified.
         if (tilemap.GetTile(new Vector3Int(x, y, tilemapRenderer.sortingOrder)) == chubeTile)
             return 2;
@@ -119,6 +121,7 @@ public class TilemapController : MonoBehaviour
 
     public static IEnumerator cascade(Vector3Int destroypos) //cascading destroying effect
     {
+        inCascade = true;
         Debug.Log("Calculating cascade...");
         //0 = nothing
         //1 = something
@@ -183,7 +186,7 @@ public class TilemapController : MonoBehaviour
         while (true)
         {
             bool finish = true;
-            foreach(List<Point> l in finals)
+            foreach (List<Point> l in finals)
             {
                 if (l.Count == 0)
                     continue;
@@ -191,7 +194,7 @@ public class TilemapController : MonoBehaviour
                     finish = false;
                 Point cur = l[0];
                 l.RemoveAt(0);
-                yield return new WaitForSeconds(cascadeTime); //TODO: make waiting work
+                yield return new WaitForSeconds(cascadeTime);
                 tilemap.SetTile(new Vector3Int(cur.x, cur.y, tilemapRenderer.sortingOrder), null);
                 //note that tileManager/buildMode will check if the tile is null and then delete itself
             }
@@ -200,6 +203,7 @@ public class TilemapController : MonoBehaviour
         }
 
         Debug.Log("Finished cascade.");
+        inCascade = false;
     }
 
     public void coroutine(Vector3Int pos)
@@ -207,7 +211,6 @@ public class TilemapController : MonoBehaviour
         StartCoroutine(cascade(pos));
     }
     //---------------------------------------cascade------------------------------------------
-
     
 
     public static void changeProperties(Vector3Int pos) //changes the static properties of this class

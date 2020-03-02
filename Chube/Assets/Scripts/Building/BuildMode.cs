@@ -66,7 +66,10 @@ public class BuildMode : MonoBehaviour
             cellPosition.z = tilemapRenderer.sortingOrder;
             Tile tile = controller.currentTile;
             // If current cell is available, set cursor to green
-            if (checkAvailability(cellPosition) && prefabManager.prefabMap[tileToObject[tile].gameObject.name] < tileToObject[tile].GetComponent<TileManager>().maxAmount && !keys.Contains(cellPosition))
+            if (checkAvailability(cellPosition)
+                && prefabManager.prefabMap[tileToObject[tile].gameObject.name] < tileToObject[tile].GetComponent<TileManager>().maxAmount
+                && !keys.Contains(cellPosition)
+                && !TilemapController.inCascade)
             {
                 cursor.render.color = Color.green;
 
@@ -86,7 +89,8 @@ public class BuildMode : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(0))
             {
-                if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && tilemap.HasTile(cellPosition)) //destroy tile
+                if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && tilemap.HasTile(cellPosition)
+                    && !TilemapController.inCascade) //destroy tile
                 {
                     string tilename = tilemap.GetTile(cellPosition).name;
                     if (tilename.Equals(chubeTile.name))

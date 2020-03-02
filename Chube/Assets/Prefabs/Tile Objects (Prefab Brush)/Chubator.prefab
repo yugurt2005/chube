@@ -99,10 +99,13 @@ MonoBehaviour:
   maxHealth: 20
   isChube: 0
   maxAmount: 5
+  healAmount: 0
   pollutedTile: {fileID: 11400000, guid: ceec1100d3e243d4f80e05cee459f556, type: 2}
   tilemap: {fileID: 1007617699840858494, guid: b7dbaa1c231051d479051f15ab44ccfe, type: 3}
   tRenderer: {fileID: 0}
   prefabBrush: {fileID: 11400000, guid: 898d964ba10cd9f46a82b323a3b697ca, type: 2}
+  manager: {fileID: 0}
+  tilemapController: {fileID: 0}
 --- !u!61 &8816224977807065563
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -141,16 +144,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d854edb5773672240b980b8f0ffef986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normal: {fileID: 11400000, guid: 37940ff5c9bdbe247a0ac146e2b9b259, type: 2}
-  highlighted: {fileID: 11400000, guid: 9738a1a2d126a94479514f3c1e72b6fc, type: 2}
+  normalTile: {fileID: 11400000, guid: 37940ff5c9bdbe247a0ac146e2b9b259, type: 2}
+  validTile: {fileID: 11400000, guid: 6c83e63824dd50a4ab5ca11ceb338650, type: 2}
+  invalidTile: {fileID: 11400000, guid: 9738a1a2d126a94479514f3c1e72b6fc, type: 2}
+  chubatingTile: {fileID: 11400000, guid: bf3d56cd2e2067742926a0706fb0fac5, type: 2}
   tilemap: {fileID: 0}
   tRenderer: {fileID: 0}
-  walkable: {fileID: 11400000, guid: ffe2afd810d691043bb96ce54560cbb4, type: 2}
+  walkableTiles:
+  - {fileID: 11400000, guid: 9cfe92032e200f148afd3269aa1c060e, type: 2}
+  - {fileID: 11400000, guid: ffe2afd810d691043bb96ce54560cbb4, type: 2}
+  - {fileID: 11400000, guid: ceec1100d3e243d4f80e05cee459f556, type: 2}
   materials: {fileID: 0}
   pos: {x: 0, y: 0, z: 0}
   troopPrefab: {fileID: 1344853874796227960, guid: 6c4b123f5413a1345bc990503fd7bf07,
     type: 3}
   troopToSpawn: {fileID: 0}
   selfMaterials: 0
-  time: 10
+  time: 5
   cost: 20

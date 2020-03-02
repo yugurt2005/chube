@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class SubplatoonShadowRenderer : MonoBehaviour
 {
+    /*
     public Vector3 Offset = new Vector3(-0.1f, -0.1f);
     GameObject shadow;
 
@@ -78,6 +79,7 @@ public class SubplatoonShadowRenderer : MonoBehaviour
     //         transCaster.position.y + offset.y);
     //     sprRndShadow.sprite = sprRndCaster.sprite;
     // }
+    */
 }
 
 

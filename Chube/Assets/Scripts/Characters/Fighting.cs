@@ -29,7 +29,6 @@ public class Fighting : MonoBehaviour
         if (!fighting && Raycast(out character))
         {
             fighting = true;
-            Debug.Log(character.tag);
             StopAllCoroutines();
             StartCoroutine(Fight(character));
         }
@@ -37,13 +36,7 @@ public class Fighting : MonoBehaviour
 
     IEnumerator Fight(GameObject character)
     {
-        Debug.Log("hi");
-        Health health = character.GetComponent<Health>();
-
         Health opponent = character.GetComponent<Health>();
-
-        if (gameObject.tag == "Troop")
-            Debug.Log(opponent.health);
 
         while (true)
         {
@@ -56,13 +49,13 @@ public class Fighting : MonoBehaviour
                     transform.position = Vector3.MoveTowards(transform.position, character.transform.position, speed * Time.deltaTime);
                 else
                     break;
-                if (gameObject.tag == "Troop")
-                    Debug.Log(opponent.health);
+
                 position = transform.position;
             }
             catch (Exception error)
             {
-                Debug.LogError(error);
+                Debug.Log(error);
+                break;
             }
 
             yield return null;

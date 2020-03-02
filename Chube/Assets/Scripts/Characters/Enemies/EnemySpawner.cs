@@ -3,8 +3,10 @@ using UnityEngine.Tilemaps;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public Difficulty difficulty;
+
     public GameObject prefabEnemy;
-    public GameObject prefabArcherEnemy;
+    //public GameObject prefabArcherEnemy;
     private float countdown = 5f;
     public float spawnSpeed = 5f;
 
@@ -17,12 +19,18 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
+        spawnSpeed = 50 / difficulty.difficultyMultiplier;
+
         if (countdown <= 0)
         {
             // uses debris's random perimeter position generator function
             Vector3 spawnPos = edgeSpawner.getPositionOnPerimeter();
 
-            enemyTypeProbability = Random.Range(0, 100);
+            GameObject enemyObj = (GameObject)Instantiate(prefabEnemy, spawnPos, transform.rotation);
+            Enemy enemy = enemyObj.GetComponent<Enemy>();
+            enemy.onInstantiate(tilemap, tilemapRenderer); //j
+
+            /*enemyTypeProbability = Random.Range(0, 100);
             if (enemyTypeProbability >= 0 & enemyTypeProbability < 50)
             {
                 GameObject enemyObj = (GameObject)Instantiate(prefabEnemy, spawnPos, transform.rotation);
@@ -36,6 +44,7 @@ public class EnemySpawner : MonoBehaviour
                 Enemy archerEnemy = archerEnemyObj.GetComponent<Enemy>();
                 archerEnemy.onInstantiate(tilemap, tilemapRenderer);
             }
+            */
 
             countdown = spawnSpeed;
         }

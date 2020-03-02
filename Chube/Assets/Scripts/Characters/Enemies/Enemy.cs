@@ -13,17 +13,20 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
      */
 
     public Controller movementController;
+    public Difficulty difficulty;
 
-    public float health = 10f;
     public int attackrange = 2;
     public float structDamage = 0.01f;
-    public float shipSpeed = 2f;
+    public float baseShipSpeed = 0.25f;
+
     private bool shipMode = true;
     private bool destroying = false;
     private Vector3Int chubePos;
 
     private Tilemap tilemap;
     private TilemapRenderer tilemapRenderer;
+
+    public float shipSpeed;
 
     private TileManager structure;
 
@@ -37,17 +40,13 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
         this.tilemapRenderer = tilemapRenderer;
 
         movementController = GameObject.Find("EnemyMovement").GetComponent<Controller>();
-    }
-
-    public void takeDamage(float damage)
-    {
-        health -= damage;
-        if (health <= 0)
-            Destroy(gameObject);
+        difficulty = GameObject.Find("Difficulty").GetComponent<Difficulty>();
     }
     
     void Update()
     {
+        shipSpeed = baseShipSpeed * difficulty.difficultyMultiplier;
+
         Vector3Int tilemappos = tilemap.WorldToCell(transform.position);
         tilemappos.z = tilemapRenderer.sortingOrder;
 
@@ -67,7 +66,7 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
                 shipMode = false;
 
                 StopAllCoroutines();
-                StartCoroutine(movementController.Move(transform, transform.position, tilemap.GetCellCenterWorld(chubePos), false, false));
+                StartCoroutine(movementController.Move(transform, transform.position, tilemap.GetCellCenterWorld(chubePos) /*, false, false*/));
             }            
         }
         else if (!destroying)
@@ -80,7 +79,7 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
                 // This would cast rays only against colliders in layer 8, so we just inverse the mask.
                 layerMask = ~layerMask;
 
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 5, layerMask);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 3, layerMask);
 
                 Debug.DrawRay(transform.position, new Vector3(dir.x, dir.y, 0), Color.yellow);
 
@@ -105,8 +104,8 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
             structure.damage(structDamage);
             if (structure.health <= 0)
             {
-                this.gameObject.SetActive(false);
-                //StartCoroutine(movementController.Move(transform, transform.position, chubePos));
+                StopAllCoroutines();
+                StartCoroutine(movementController.Move(transform, transform.position, tilemap.GetCellCenterWorld(chubePos)));
             }
         }
     }

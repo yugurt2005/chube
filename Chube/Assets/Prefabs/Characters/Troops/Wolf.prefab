@@ -98,7 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementController: {fileID: 0}
   chosen: 0
-  health: 100
+  energy: {fileID: 0}
+  moveCost: 10
   tilemap: {fileID: 0}
   tilemapRenderer: {fileID: 0}
   walkableTiles:
@@ -145,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  speed: 2.28
-  perceptionRadius: 3
+  speed: 2
+  perceptionRadius: 2
   attackRadius: 1
 --- !u!114 &-3121195460656192589
 MonoBehaviour:

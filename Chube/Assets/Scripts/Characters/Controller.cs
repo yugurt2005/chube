@@ -8,7 +8,9 @@ public class Controller : MonoBehaviour {
     public TilemapRenderer tilemapRenderer;
 
     public Pathfinder pathfinder;
+    public Difficulty difficulty;
 
+    public float baseSpeed;
     public float speed;
 
     private void Awake()
@@ -16,7 +18,12 @@ public class Controller : MonoBehaviour {
         pathfinder.tilemap = tilemap;
     }
 
-    public IEnumerator Move(Transform character, Vector3 origin, Vector3 destination, bool tmpPortalBan, bool istroop) {
+    private void Update()
+    {
+        speed = baseSpeed * difficulty.difficultyMultiplier;
+    }
+
+    public IEnumerator Move(Transform character, Vector3 origin, Vector3 destination /*, bool tmpPortalBan, bool istroop*/) {
 		pathfinder.destinationLocation = tilemap.WorldToCell(origin);
         pathfinder.destinationLocation.z = tilemapRenderer.sortingOrder;
 		pathfinder.originLocation = tilemap.WorldToCell(destination);
@@ -25,6 +32,7 @@ public class Controller : MonoBehaviour {
 		IEnumerable<Vector3Int> path = pathfinder.BackPropagatePath ();
 
 		foreach (Vector3Int location in path) {
+            /*
             if (!tmpPortalBan && tilemap.GetTile(location).name == "PortalTile")
             {
                 character.position = tilemap.CellToWorld(PortalController.getCorrespondingPortal(location));
@@ -33,12 +41,14 @@ public class Controller : MonoBehaviour {
                     StartCoroutine(Move(character, character.position, destination, true, istroop));
                 break;
             }
+            */
 			Vector3 localTarget = tilemap.GetCellCenterWorld(location);
 			while (character.position != localTarget) {
+                
                 character.position = Vector3.MoveTowards(character.position, localTarget, Time.deltaTime * speed);
 				yield return new WaitForFixedUpdate();
 			}
-            tmpPortalBan = false;
+            //tmpPortalBan = false;
 		}
 	}
 

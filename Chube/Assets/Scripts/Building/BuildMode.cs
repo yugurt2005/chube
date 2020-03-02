@@ -16,7 +16,7 @@ public class BuildMode : MonoBehaviour
     public GameObject chubator;
     public GameObject collector;
     public GameObject generator;
-    public GameObject portal;
+    //public GameObject portal;
 
     [Header("Tiles")]
     public Tile chubeTile;
@@ -27,7 +27,7 @@ public class BuildMode : MonoBehaviour
     public Tile builtTile;
     public Tile generatorTile;
     public Tile WolfChubatorHighlighted;
-    public Tile portalTile;
+    //public Tile portalTile;
 
     [Header("Tilemap")]
     public Tilemap tilemap;
@@ -54,7 +54,7 @@ public class BuildMode : MonoBehaviour
         tileToObject.Add(buildProcessTile, normal);
         tileToObject.Add(chubatorTile, chubator);
         tileToObject.Add(trashCollectorTile, collector);
-        tileToObject.Add(portalTile, portal);
+        //tileToObject.Add(portalTile, portal);
     }
     void Update()
     {
@@ -100,11 +100,13 @@ public class BuildMode : MonoBehaviour
                         materials.amount += (int)(BuildButtonsController.costs[tilename] / 2); //only get half value back
                         tilemap.SetTile(cellPosition, null);
                         StartCoroutine(TilemapController.cascade(cellPosition));
+                        /*
                         if (tilename.Equals(portalTile.name))
                         {
                             materials.amount += (int)(BuildButtonsController.costs[tilename] / 2);
                             PortalController.destroyPairedPortals(cellPosition);
                         }
+                        */
                         keys.Add(cellPosition);
                         cooldowns.Add(cellBreakingCooldown);
                     }

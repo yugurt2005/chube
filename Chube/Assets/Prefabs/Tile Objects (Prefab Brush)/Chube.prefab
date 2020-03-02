@@ -95,13 +95,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  maxHealth: 50
+  maxHealth: 100
   isChube: 1
   maxAmount: 1
   pollutedTile: {fileID: 0}
   tilemap: {fileID: 1007617699840858494, guid: b7dbaa1c231051d479051f15ab44ccfe, type: 3}
   tRenderer: {fileID: 0}
   prefabBrush: {fileID: 11400000, guid: 898d964ba10cd9f46a82b323a3b697ca, type: 2}
+  manager: {fileID: 0}
+  tilemapController: {fileID: 0}
 --- !u!61 &7293846196607355681
 BoxCollider2D:
   m_ObjectHideFlags: 0

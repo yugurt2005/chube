@@ -3,11 +3,14 @@ using UnityEngine.Tilemaps;
 
 public class ChubatorController : MonoBehaviour
 {
-    public Tile normal;
-    public Tile highlighted;
+    public Tile normalTile;
+    public Tile validTile;
+    public Tile invalidTile;
+    public Tile chubatingTile;
+
     public Tilemap tilemap;
     public TilemapRenderer tRenderer;
-    public Tile walkable;
+    public Tile[] walkableTiles;
     public Materials materials;
 
     public Vector3Int pos;
@@ -21,6 +24,7 @@ public class ChubatorController : MonoBehaviour
     private Vector3Int[] borderTiles;
     private bool firstTouch;
     private Vector3Int previousTile;
+    private bool chubating;
 
     void Start()
     {
@@ -51,24 +55,27 @@ public class ChubatorController : MonoBehaviour
 
         if (mousePos == pos)
         {
-            tilemap.SetTile(pos, highlighted);
-
-            if (Input.GetButtonDown("Fire1"))
+            if (materials.amount >= cost)
             {
-                if (materials.amount >= cost)
+                tilemap.SetTile(pos, validTile);
+                if (Input.GetButtonDown("Fire1"))
                 {
                     Debug.Log("Fed chubator");
                     selfMaterials += cost;
                     materials.amount -= cost;
-                    Debug.Log(selfMaterials);
-                }
-                else {
-                    Debug.Log("Not enough materials to feed chubator!");
+                    chubating = true;
+                    tilemap.SetTile(pos, chubatingTile);
+                    Debug.Log(selfMaterials);                    
                 }
             }
+            else {
+                if (chubating) tilemap.SetTile(pos, chubatingTile);
+                else tilemap.SetTile(pos, invalidTile);        
+            }            
         }
         else if (mousePos != pos) {
-            tilemap.SetTile(pos, normal);
+            if (chubating) tilemap.SetTile(pos, chubatingTile);
+            else tilemap.SetTile(pos, normalTile);
         }
 
         if (countdown <= 0)
@@ -77,14 +84,22 @@ public class ChubatorController : MonoBehaviour
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    if (tilemap.GetTile(borderTiles[i]) == walkable)
+                    foreach (Tile tile in walkableTiles)
                     {
-                        selfMaterials -= cost;                        
-                        Instantiate(troopToSpawn, tilemap.GetCellCenterWorld(borderTiles[i]), transform.rotation);
-                        countdown = time;
-                        return;
+                        if (tilemap.GetTile(borderTiles[i]) == tile)
+                        {
+                            selfMaterials -= cost;
+                            Instantiate(troopToSpawn, tilemap.GetCellCenterWorld(borderTiles[i]), transform.rotation);
+                            countdown = time;
+                            return;
+                        }
                     }
                 }
+            }
+
+            else {
+                tilemap.SetTile(pos, normalTile);
+                chubating = false;
             }
 
             countdown = time;

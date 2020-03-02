@@ -9,6 +9,8 @@ public class Troop : MonoBehaviour //TODO: inherit from pathfinder
     private SpriteRenderer spriteRenderer;
     public Controller movementController;
     public bool chosen;
+    public Energy energy;
+    public int moveCost;
 
     public Tilemap tilemap;
     public TilemapRenderer tilemapRenderer;
@@ -24,14 +26,13 @@ public class Troop : MonoBehaviour //TODO: inherit from pathfinder
 
     private void Start()
     {
+        energy = GameObject.Find("Energy").GetComponent<Energy>();
         movementController = GameObject.Find("TroopMovement").GetComponent<Controller>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         resetattack = new List<Vector3Int>();
         resetmove = new List<Vector3Int>();
         resetcolor = new Color(1, 1, 1, 1);
     }
-
-    // Because you need the references because they're instantiated so you can't set the references in the editor
 
     private bool SetTileColor(int x, int y, Color color, bool ismove)
     {
@@ -103,6 +104,8 @@ public class Troop : MonoBehaviour //TODO: inherit from pathfinder
 
     private bool isValidMoveSpot(Vector3Int movePos)
     {
+        if (energy.amount < moveCost) return false;
+
         //for wolves
         foreach (Vector3Int pos in resetmove)
         {
@@ -122,11 +125,15 @@ public class Troop : MonoBehaviour //TODO: inherit from pathfinder
         if (Input.GetButtonDown("Fire1") && tilemap.HasTile(mouseTile) && chosen && isValidMoveSpot(mouseTile))
         {
             Debug.Log(this.name + " should be moving to " + mouseTile);
+            energy.amount -= moveCost;
             StopAllCoroutines();
+            /*
             if (tilemap.GetTile(selfpos).name == "PortalTile")
                 StartCoroutine(movementController.Move(transform, transform.position, tilemap.CellToWorld(mouseTile), true, true));
             else
                 StartCoroutine(movementController.Move(transform, transform.position, tilemap.CellToWorld(mouseTile), false, true));
+                */
+            StartCoroutine(movementController.Move(transform, transform.position, tilemap.CellToWorld(mouseTile) /*,false, true*/));
         }
 
         // If place is valid thru specific troop's range

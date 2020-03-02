@@ -11,6 +11,7 @@ public class TileManager : MonoBehaviour
     public int maxHealth;
     public bool isChube;
     public int maxAmount;
+    public float healAmount;
 
     public static float enemyDamage = 0.003f;
     public Tile pollutedTile;
@@ -23,6 +24,7 @@ public class TileManager : MonoBehaviour
     private Vector3Int pos;
 
     private bool isPolluted = false;
+    private bool colliding = false;
 
     void Start()
     {
@@ -64,6 +66,8 @@ public class TileManager : MonoBehaviour
         }
         if (isPolluted)
             health -= enemyDamage * Time.deltaTime;
+
+        if (isChube && !colliding && health <= maxHealth) health += healAmount;
     }
 
     public void cascadeDestroy() //called by cascader
@@ -89,6 +93,7 @@ public class TileManager : MonoBehaviour
         if (collision.tag == "Enemy" && gameObject.tag == "Walkable") {
             tilemap.SetTile(pos, pollutedTile);
             isPolluted = true;
+            colliding = true;
         }
     }
     void OnTriggerStay2D()
@@ -96,6 +101,10 @@ public class TileManager : MonoBehaviour
         health -= enemyDamage * Time.deltaTime;
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        colliding = false;
+    }
     public void damage(float amount) {
         //Debug.Log("STRUCTURE BEING DAMAGED. HEALTH AT: " + health);
         health -= amount;

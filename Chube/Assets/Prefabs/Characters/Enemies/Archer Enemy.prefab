@@ -353,7 +353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2236184215061020371
 Transform:
   m_ObjectHideFlags: 0
@@ -577,7 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad103f4b53e56b4ebea9fd0c083d70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 75
 --- !u!114 &3749225369048176199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,8 +590,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a532813e8dbf740bdee00024c2fc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0.1
-  speed: 0
+  damage: 10
+  speed: 3
   perceptionRadius: 4.08
   attackRadius: 3.16
 --- !u!1 &2462684417654476039

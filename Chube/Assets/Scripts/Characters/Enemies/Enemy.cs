@@ -50,8 +50,6 @@ public class Enemy : MonoBehaviour //TODO: inherit from pathfinder
         Vector3Int tilemappos = tilemap.WorldToCell(transform.position);
         tilemappos.z = tilemapRenderer.sortingOrder;
 
-        //TODO: find enemy in attack range and fire. -NOTE: ENEMY CAN'T MOVE WHILE SHOOTING.
-
         if (!tilemap.HasTile(tilemappos))
         {
             StopAllCoroutines(); //stop pathfinding

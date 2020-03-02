@@ -147,7 +147,7 @@ public class Troop : MonoBehaviour //TODO: inherit from pathfinder
             }
         }
         else {
-            spriteRenderer.color = Color.blue;
+            spriteRenderer.color = Color.white;
             ResetTileColors();
         }
 
